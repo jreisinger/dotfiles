@@ -40,7 +40,7 @@ if [[ "X" == "X$@" ]]; then
     help_and_exit 1
 fi
 
-MYBASENAME="$(echo -n $@ | cut -d" " -f1)"
+MYBASENAME="$(basename $(echo -n $@ | cut -d" " -f1))"
 lock="$HOME/.runonce-$MYBASENAME-$(echo -n $@|md5sum|cut -d" " -f1)"
 if [[ ! -e $lock ]]; then
     "$@"
