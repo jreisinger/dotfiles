@@ -6,8 +6,8 @@
     restorePreviousWindowsOnStart: false
     telemetryConsent: "limited"
     themes: [
-      "atom-dark-ui"
-      "atom-dark-syntax"
+      "atom-light-ui"
+      "atom-light-syntax"
     ]
   editor:
     autoIndentOnPaste: true
