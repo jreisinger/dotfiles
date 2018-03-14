@@ -12,6 +12,6 @@ flock $self, LOCK_EX | LOCK_NB or die "This script ($0) is already running\n";
 die "Usage: $0 joe example.com 22 /data /backup/joe/\n" unless @ARGV == 5;
 my ( $login, $host, $port, $src, $dst ) = @ARGV;
 
-my $cmd = "rsync -q --delete -az -e 'ssh -p $port -l $login' $src $host:$dst";
+my $cmd = "rsync -q --delete -az --no-perms --no-owner --no-group -e 'ssh -p $port -l $login' $src $host:$dst";
 
 system($cmd) == 0 or die "system($cmd) failed: $?\n";
