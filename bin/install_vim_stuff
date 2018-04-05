@@ -97,11 +97,11 @@ my $plugins = [
         remote => 'https://github.com/pearofducks/ansible-vim.git',
         local  => "$bundle_dir/ansible-vim",
     },
-    {
-        name   => 'Asynchronous Lint Engine',
-        remote => 'https://github.com/w0rp/ale.git',
-        local  => "$bundle_dir/ale",
-    },
+    #{
+    #    name   => 'Asynchronous Lint Engine',
+    #    remote => 'https://github.com/w0rp/ale.git',
+    #    local  => "$bundle_dir/ale",
+    #},
 ];
 
 for my $plugin (@$plugins) {
