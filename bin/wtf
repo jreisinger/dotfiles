@@ -4,8 +4,8 @@ import cmd
 
 class WTF(cmd.Cmd):
 
-    def do_basic_tools(self, line):
-        """ (Ubuntu) package names containing basic tools.
+    def do_basic_tools_packages(self, line):
+        """(Ubuntu) package names containing basic tools.
         """
         print("apt-get update && apt-get install procps net-tools")
 
@@ -31,6 +31,8 @@ ISO8601 Local TZ timestamp    | date +%FT%T%Z
 ''')
 
     def do_vim_config(self, line):
+        """vim config options I often use
+        """
         print(':set tabstop=4 shiftwidth=4 expandtab')
 
     def do_EOF(self, line):
