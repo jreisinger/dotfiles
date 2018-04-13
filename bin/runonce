@@ -40,6 +40,7 @@ done
 shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
+# Run without arguments
 if [[ "X" == "X$@" ]]; then
     help_and_exit 1
 fi
