@@ -14,11 +14,15 @@ EOF
     exit $1
 }
 
-# A POSIX variable
-OPTIND=1    # Reset in case getopts has been used previously in the shell.
+#
+# Command line options
+#
 
-# Initialize our own variables:
-interval=480 # minutes
+# A POSIX variable
+OPTIND=1        # reset in case getopts has been used previously in the shell
+
+# Initialize our own variables
+interval=480    # minutes
 
 # getops can't handle long options (--help) but can handle options clustering
 # (-vf FILE)
@@ -40,20 +44,30 @@ if [[ "X" == "X$@" ]]; then
     help_and_exit 1
 fi
 
+#
+# MAIN
+#
+
 # Find out binary for computing MD5 checksum
 case $(uname) in
     Linux*)  MD5=md5sum;;
     Darwin*) MD5=md5;;
+    *)       echo "I only work on Linux and Darwin (so far :-)..."
+             exit 1
+             ;;
 esac
 
 MYBASENAME="$(basename $(echo -n $@ | cut -d" " -f1))"
-lock="$HOME/.runonce-$MYBASENAME-$(echo -n $@|$MD5|cut -d" " -f1)"
-if [[ ! -e $lock ]]; then
+
+# MD5 checksums are used to support commands with switches (ex. ls -l)
+LOCK="$HOME/.runonce-$MYBASENAME-$(echo -n $@|$MD5|cut -d" " -f1)"
+
+if [[ ! -e $LOCK ]]; then   # no lock - command run for the first time
     "$@"
-    touch $lock
-else # lock exists
-    if [[ "`find $lock -mmin +$interval`" ]]; then
+    touch $LOCK
+else                        # lock exists
+    if [[ "`find $LOCK -mmin +$interval`" ]]; then
         "$@"
-        touch $lock
+        touch $LOCK
     fi
 fi
