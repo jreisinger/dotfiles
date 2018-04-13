@@ -40,8 +40,14 @@ if [[ "X" == "X$@" ]]; then
     help_and_exit 1
 fi
 
+# Find out binary for computing MD5 checksum
+case $(uname) in
+    Linux*)  MD5=md5sum;;
+    Darwin*) MD5=md5;;
+esac
+
 MYBASENAME="$(basename $(echo -n $@ | cut -d" " -f1))"
-lock="$HOME/.runonce-$MYBASENAME-$(echo -n $@|md5sum|cut -d" " -f1)"
+lock="$HOME/.runonce-$MYBASENAME-$(echo -n $@|$MD5|cut -d" " -f1)"
 if [[ ! -e $lock ]]; then
     "$@"
     touch $lock
