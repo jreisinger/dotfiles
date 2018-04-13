@@ -63,7 +63,7 @@ perl-core-mods [options] [<perl_version>]
   Options:
     --help      brief help message
     --man       full documentation
-    --name      sor by module name (default is by release date)
+    --name      sort by module name (default is by release date)
 
 =head1 DESCRIPTION
 
