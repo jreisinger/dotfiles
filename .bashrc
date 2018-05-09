@@ -216,7 +216,7 @@ if [ -f ~/ansible/hacking/env-setup ]; then
 fi
 
 # Upgrade my dotfiles but not always
-runonce ~/.../... supi
+runonce -i 10080 ~/.../... supi
 runonce -i 10080 install_vim_stuff
 
 # Print quote but not always
