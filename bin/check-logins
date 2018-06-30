@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 
+use Geo::IP;
+
 my %logins;
 
 for (`sudo journalctl --no-pager --grep=accepted`) {
@@ -17,9 +19,12 @@ for (`sudo journalctl --no-pager --grep=accepted`) {
 
 print "-" x 45, "\n";
 
+my $gi = Geo::IP->new(GEOIP_MEMORY_CACHE);
+
 for my $user (sort keys %logins) {
     print "$user\n";
     for my $ip (sort { $logins{$user}{$b} <=> $logins{$user}{$a} } keys %{$logins{$user}}) {
-        print "  $ip: $logins{$user}{$ip}\n";
+        my $country = $gi->country_name_by_addr($ip) // 'unknown';
+        print "  $ip ($country): $logins{$user}{$ip}\n";
     }
 }
