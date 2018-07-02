@@ -109,7 +109,7 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    url = 'https://raw.githubusercontent.com/jreisinger/blog/master/posts/quotes.txt'
+    url = 'https://raw.githubusercontent.com/jreisinger/quotes/master/quotes.txt'
     cache_file = os.path.expanduser('~/.myquotes.data')
 
     cache = Cache(url, cache_file)
