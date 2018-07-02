@@ -3,6 +3,7 @@
     disabledPackages: [
       "spell-check"
     ]
+    excludeVcsIgnoredPaths: false
     restorePreviousWindowsOnStart: false
     telemetryConsent: "limited"
     themes: [
