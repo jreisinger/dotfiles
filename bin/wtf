@@ -34,6 +34,8 @@ ISO8601 Local TZ timestamp    | date +%FT%T%Z
         """vim config options I often use
         """
         print(':set tabstop=4 shiftwidth=4 expandtab')
+        print(':set nofoldenable')
+        print(':syntax off')
 
     def do_EOF(self, line):
         return True
