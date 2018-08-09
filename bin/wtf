@@ -35,6 +35,7 @@ ISO8601 Local TZ timestamp    | date +%FT%T%Z
         """
         print(':set tabstop=4 shiftwidth=4 expandtab')
         print(':set nofoldenable')
+        print(':set textwidth=0')
         print(':syntax off')
 
     def do_EOF(self, line):
