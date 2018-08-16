@@ -24,6 +24,11 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# Golang
+if [ -d /usr/local/go/bin ]; then
+    PATH="$PATH:/usr/local/go/bin"
+fi
+
 # Environment variables
 export EDITOR=vi
 export VISUAL=vi
