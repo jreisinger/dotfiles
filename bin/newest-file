@@ -10,6 +10,7 @@ my ( $age, $name ) = ( -1, "" );
 
 find(
     sub {
+        return if -l; # skip symlinks
         return if not -f;
         return if $age > ( stat(_) )[9];
         $age  = ( stat(_) )[9];
