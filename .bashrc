@@ -176,6 +176,19 @@ function extract () {
   fi
 }
 
+function workon () {
+	if [ "$#" -ne 1 ]; then
+		echo "Usage: workon PROJECT"
+		#exit 1
+	else
+		PROJECT=$1
+		cd $PROJECT
+		git pull
+		#atom .
+		vim
+	fi
+}
+
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
