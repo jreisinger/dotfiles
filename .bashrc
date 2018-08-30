@@ -184,8 +184,8 @@ function workon () {
 		PROJECT=$1
 		cd $PROJECT
 		git pull
-		#atom .
-		vim
+		atom .
+		#vim
 	fi
 }
 
