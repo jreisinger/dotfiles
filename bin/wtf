@@ -38,6 +38,12 @@ ISO8601 Local TZ timestamp    | date +%FT%T%Z
         print(':set textwidth=0')
         print(':syntax off')
 
+    def do_docker(self, line):
+        """docker cli tool options
+        """
+        print('docker ps --all --format "table {{.Image}}\\t{{.Status}}\\t{{.Ports}}\\t{{.Names}}"')
+
+
     def do_EOF(self, line):
         return True
 
