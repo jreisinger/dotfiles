@@ -221,6 +221,11 @@ if [ -d "/opt/rakudo-star-2017.10/share/perl6/site/bin" ]; then
     PATH="/opt/rakudo-star-2017.10/share/perl6/site/bin:$PATH"
 fi
 
+# add go's bin to PATH
+if [ -d "$HOME/go/bin" ]; then
+	PATH="$HOME/go/bin:$PATH"
+fi
+
 export VAGRANT_DETECTED_OS="$(uname)"
 
 # In case we use Ansible from checkout (development version)
@@ -240,7 +245,7 @@ if [ -e ~/.ssh_bash_completion ]; then
     source ~/.ssh_bash_completion
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Show dir path in Gnome terminal
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
