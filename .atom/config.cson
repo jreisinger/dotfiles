@@ -4,7 +4,6 @@
       "spell-check"
     ]
     excludeVcsIgnoredPaths: false
-    restorePreviousWindowsOnStart: false
     telemetryConsent: "limited"
     themes: [
       "atom-light-ui"
@@ -16,6 +15,7 @@
     normalizeIndentOnPaste: true
     showIndentGuide: true
     softWrap: true
+    tabLength: 4
     tabType: "soft"
   "exception-reporting":
     userId: "57a4e154-a69e-4573-9d05-687caffa705b"
