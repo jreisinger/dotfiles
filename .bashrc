@@ -250,3 +250,6 @@ fi
 # Show dir path in Gnome terminal
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
 PROMPT_COMMAND='echo -ne "\033]0;$(pwd | perl -pe '\''$home=$ENV{HOME} ; s#$home#~#'\'')\007"'
+
+# kubernetes (k8s) autocompletion
+source <(kubectl completion bash)
