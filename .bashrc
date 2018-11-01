@@ -176,17 +176,12 @@ function extract () {
   fi
 }
 
-function workon () {
-	if [ "$#" -ne 1 ]; then
-		echo "Usage: workon PROJECT"
-		#exit 1
-	else
-		PROJECT=$1
-		cd $PROJECT
-		git pull
-		atom .
-		#vim
-	fi
+# Open my workshop
+function work () {
+    local proj=$(find ~/git -type d -maxdepth 2 | peco)
+    atom -a $proj
+    cd $proj
+    git pull
 }
 
 # some more ls aliases
