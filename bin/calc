@@ -2,10 +2,19 @@
 use strict;
 use warnings;
 
-# Help...
-our ($h);
+# Options ...
+our ($h, $b);
+
+# Help ...
 if ($h) {
-    print "Simple calculator based on Perl's eval\n";
+    print <<"EOF";
+Simple calculator based on Perl's eval()
+
+calc [options] <expression>
+
+-h      help
+-b      convert result to binary
+EOF
     exit 0;
 }
 
@@ -13,17 +22,22 @@ if ($h) {
 my $allowed = qr'\d\+\-\/\*\.x';
 
 # Transform input a bit...
-@ARGV = ( "@ARGV" =~ /[$allowed]/g );    # un-taint
+@ARGV = ( "@ARGV" =~ /[$allowed]/g );   # un-taint
 my $expr = "@ARGV";
-$expr =~ s/\s+//g;                       # allow whitespace in input numbers
-$expr =~ s/x/*/gi;                       # allow x instead of * in input
+$expr =~ s/\s+//g;                      # allow whitespace in input numbers
+$expr =~ s/x/*/gi;                      # allow x instead of * in input
 
 # Do the calculation...
 my $res = eval "$expr";
-die "Does not compute...$expr\n" unless $res;
+die "Does not compute...$expr\n" unless defined $res;
 
-# Show thousands in result but not in the decimal part
-my ( $before_dot, $after_dot ) = split /\./, $res;
-$before_dot =~ s/(\d{1,3}?)(?=(\d{3})+$)/$1 /g;
+if ($b) {
+    # Show resul in binary...
+    printf "%s = %b\n", $expr, $res;
+} else {
+    # Show thousands in result but not in the decimal part...
+    my ( $before_dot, $after_dot ) = split /\./, $res;
+    $before_dot =~ s/(\d{1,3}?)(?=(\d{3})+$)/$1 /g;
 
-printf "%s = %s.%s\n", $expr, $before_dot, $after_dot // 0;
+    printf "%s = %s.%s\n", $expr, $before_dot, $after_dot // 0;
+}
