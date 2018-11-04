@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 # Options ...
-our ($h, $b);
+our ($h, $b, $x);
 
 # Help ...
 if ($h) {
@@ -12,8 +12,13 @@ Simple calculator based on Perl's eval()
 
 calc [options] <expression>
 
--h      help
--b      convert result to binary
+-h help
+-b convert expression (or its result) to binary
+-x convert expression (or its result) to hexadecimal
+
+calc '(20+1)x2'
+calc -b 255
+calc -x 2**8
 EOF
     exit 0;
 }
@@ -32,8 +37,11 @@ my $res = eval "$expr";
 die "Does not compute...$expr\n" unless defined $res;
 
 if ($b) {
-    # Show resul in binary...
+    # Show result in binary...
     printf "%s = %b\n", $expr, $res;
+} elsif ($x) {
+    # Show result in hex...
+    printf "%s = %x\n", $expr, $res;
 } else {
     # Show thousands in result but not in the decimal part...
     my ( $before_dot, $after_dot ) = split /\./, $res;
