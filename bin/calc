@@ -3,22 +3,24 @@ use strict;
 use warnings;
 
 # Command line options...
-our ($h, $b, $x);
+our ($h, $b, $x, $c);
 
 # Help message...
 if ($h) {
-    print <<"EOF";
+    print <<'EOF';
 Simple calculator based on Perl's eval()
 
 calc [options] <expression>
 
--h help
--b convert expression (or its result) to binary
--x convert expression (or its result) to hexadecimal
+-h  help
+-b  convert expression (or its result) to binary
+-x  convert expression (or its result) to hexadecimal
+-c  convert expression (or its result) to character
 
-calc '(20+1)x2'
+calc 2^5 + 2x5
 calc -b 255
 calc -x 2**8
+for n in `seq 0 255`; do calc -c $n; done
 EOF
     exit 0;
 }
@@ -43,6 +45,10 @@ if ($b) {
 } elsif ($x) {
     # Show result in hex...
     printf "%s = %x\n", $expr, $res;
+} elsif ($c) {
+    # Show result as character...
+    binmode(STDOUT, ':utf8');
+    printf "%s = %c\n", $expr, $res;
 } else {
     # Show thousands in result but not in the decimal part...
     my ( $before_dot, $after_dot ) = split /\./, $res;
