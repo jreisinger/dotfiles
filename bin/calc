@@ -2,10 +2,10 @@
 use strict;
 use warnings;
 
-# Options ...
+# Command line options...
 our ($h, $b, $x);
 
-# Help ...
+# Help message...
 if ($h) {
     print <<"EOF";
 Simple calculator based on Perl's eval()
@@ -29,8 +29,9 @@ my $allowed = qr'\d\+\-\/\*\.x';
 # Transform input a bit...
 @ARGV = ( "@ARGV" =~ /[$allowed]/g );   # un-taint
 my $expr = "@ARGV";
-$expr =~ s/\s+//g;                      # allow whitespace in input numbers
-$expr =~ s/x/*/gi;                      # allow x instead of * in input
+$expr =~ s/\s+//g;                      # allow whitespace in input
+$expr =~ s/x/*/gi;                      # allow x for multiplication
+$expr =~ s/\^/**/g;                     # allow ^ for exponentiation
 
 # Do the calculation...
 my $res = eval "$expr";
