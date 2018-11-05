@@ -17,9 +17,9 @@ calc [options] <expression>
 -x  convert expression (or its result) to hexadecimal
 -c  convert expression (or its result) to character
 
-calc 2^5 + 2x5
-calc -b 255
-calc -x 2**8
+calc 2**5 + 2x5    # x is the same as * (multiplication)
+calc -b 2^8        # ^ is the same as ** (exponentiation)
+calc -x 256
 calc -c 2**17-3030
 EOF
     exit 0;
