@@ -30,7 +30,7 @@ pod2usage( -exitval => 0, -verbose => 2, -noperldoc => 1 ) if $man;
 
 my $perl_ver = (shift) // $];
 
-my @modules = sort keys $Module::CoreList::version{$perl_ver};
+my @modules = sort keys %{$Module::CoreList::version{$perl_ver}};
 
 my $max_length = 0;
 my %rel_date;
