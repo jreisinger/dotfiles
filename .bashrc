@@ -178,7 +178,9 @@ function extract () {
 
 # Open my workshop
 function work () {
-    local proj=$(find ~/git -maxdepth 2 -type d | peco)
+    local proj=$(find \
+        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
+        -maxdepth 1 -type d | peco)
     atom -a $proj
     cd $proj
     git pull
