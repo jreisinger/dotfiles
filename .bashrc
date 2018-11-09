@@ -184,13 +184,29 @@ function extract () {
 }
 
 # Open my workshop
-function work () {
+function worka () {
     local proj=$(find \
         ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
         -maxdepth 1 -type d | peco)
     atom -a $proj
     cd $proj
     git pull
+}
+
+# Open my workshop
+function workv () {
+    local proj=$(find \
+        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
+        -maxdepth 1 -type d | peco)
+    cd $proj
+    git pull
+	vim
+}
+
+# Enhanced cd
+function cdp () {
+	dir=$1
+	cd $(find -type d | peco)
 }
 
 # some more ls aliases
