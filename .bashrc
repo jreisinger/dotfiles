@@ -72,12 +72,19 @@ function git_info {
     git status | grep -q pull && mgs="$msg v"
     echo $msg
 }
+
+# Backgroup jobs in prompt
+function n_jobs {
+	local cnt=$(jobs | wc -l)
+	echo $cnt
+}
+
 CURRENT_USER="$(id -un)"
 if [ $CURRENT_USER = "root" ]; then
     PS1="\u@\h \W \[${bldred}\]% \[${txtrst}\]"
 else
     # \[\] around colors are needed for mintty/cygwin
-    PS1="\u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \[${bldgrn}\]\$ \[${txtrst}\]"
+	PS1="\u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \$(n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
 fi
 
 # Git
