@@ -205,8 +205,11 @@ function workv () {
 
 # Enhanced cd
 function cdp () {
-	dir=$1
-	cd $(find -type d | peco)
+	# start in dir given as arg or in home dir
+	local dir=$1
+	[[ $dir == "" ]] && dir=$HOME
+
+	cd $(find $dir -type d | peco)
 }
 
 # some more ls aliases
