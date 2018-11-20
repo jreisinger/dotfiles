@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 use strict;
 use warnings;
 use File::Path qw(make_path remove_tree);
@@ -53,11 +53,13 @@ sub _get_git {
 # Main #
 ########
 
-# Create necessary directories
+# Prepare necessary directories
 my $autoload_dir = "$ENV{HOME}/.vim/autoload";
-make_path $autoload_dir unless -e $autoload_dir;
+remove_tree $autoload_dir;
+make_path $autoload_dir;
 my $bundle_dir = "$ENV{HOME}/.vim/bundle";
-make_path $bundle_dir unless -d $bundle_dir;
+remove_tree $bundle_dir;
+make_path $bundle_dir;
 
 my $plugins = [
     {
