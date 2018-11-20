@@ -62,6 +62,10 @@ bakcyn='\e[46m' # Cyan
 bakwht='\e[47m' # White
 txtrst='\e[0m' # Text Reset
 
+################
+# PROMPT (PS1) #
+################
+
 # Git stuff in prompt
 function git_info {
     git status > /dev/null 2>&1 || return
@@ -79,13 +83,16 @@ function n_jobs {
 	echo $cnt
 }
 
-CURRENT_USER="$(id -un)"
-if [ $CURRENT_USER = "root" ]; then
-    PS1="\u@\h \W \[${bldred}\]% \[${txtrst}\]"
-else
-    # \[\] around colors are needed for mintty/cygwin
-	PS1="\u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \$(n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
-fi
+function exit_code {
+    local EXIT="$?"
+    local msg='(-:'
+    [[ $EXIT -ne 0 ]] && msg=')-:'
+    echo $msg
+}
+
+# \[\] around colors are needed for mintty/cygwin
+PS1="\$(exit_code) \u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \$(n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
+
 
 # Git
 if [ -f ~/.git-completion.bash ]; then
