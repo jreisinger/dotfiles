@@ -67,7 +67,7 @@ txtrst='\e[0m' # Text Reset
 ################
 
 # Git stuff in prompt
-function git_info {
+function _git_info {
     git status > /dev/null 2>&1 || return
     local msg=$(git branch | perl -ne 'print "$_" if s/^\*\s+// && chomp')
     local status_lines=$(git status --porcelain | wc -l)
@@ -78,12 +78,13 @@ function git_info {
 }
 
 # Backgroup jobs in prompt
-function n_jobs {
+function _n_jobs {
 	local cnt=$(jobs | wc -l)
 	echo $cnt
 }
 
-function exit_code {
+# Smiling prompt (-:
+function _exit_code {
     local EXIT="$?"
     local msg='(-:'
     [[ $EXIT -ne 0 ]] && msg=')-:'
@@ -91,7 +92,7 @@ function exit_code {
 }
 
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(exit_code) \u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \$(n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
+PS1="\$(_exit_code) \u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
 
 #########
 # SSHFS #
