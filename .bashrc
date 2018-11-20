@@ -245,9 +245,10 @@ if [ -d "/opt/rakudo-star-2017.10/share/perl6/site/bin" ]; then
 fi
 
 # add go's bin to PATH
-if [ -d "$HOME/go/bin" ]; then
-	PATH="$HOME/go/bin:$PATH"
-fi
+#if [ -d "$HOME/go/bin" ]; then
+#	PATH="$HOME/go/bin:$PATH"
+#fi
+export PATH=$PATH:$(go env GOPATH)/bin
 
 export VAGRANT_DETECTED_OS="$(uname)"
 
