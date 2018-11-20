@@ -92,7 +92,7 @@ function _exit_code {
 }
 
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(_exit_code) \u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]> \[${txtrst}\]"
+PS1="\$(_exit_code) \[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]> \[${txtrst}\]"
 
 #########
 # SSHFS #
