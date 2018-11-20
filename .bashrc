@@ -93,11 +93,6 @@ function exit_code {
 # \[\] around colors are needed for mintty/cygwin
 PS1="\$(exit_code) \u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \$(n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
 
-# Git
-if [ -f ~/.git-completion.bash ]; then
-    source ~/.git-completion.bash
-fi
-
 #########
 # SSHFS #
 #########
@@ -110,16 +105,16 @@ MYSSHFS_DIR="$HOME/mysshfs";
 
 # Mount remote directory over SSH
 function mysshfs_mount () {
-    user=$1
-    host=$2
-    dir=$3
+    local user=$1
+    local host=$2
+    local dir=$3
 
     if [ $# -ne 3 ]; then
         echo "Usage: sshfs_mount USER HOST RDIR"
         return 1
     fi
 
-    ldir="$MYSSHFS_DIR/$host/$dir"
+    local ldir="$MYSSHFS_DIR/$host/$dir"
 
     [ -d $ldir ] || mkdir -p $ldir
     sshfs -o allow_other $user@$host:$dir $ldir -o IdentityFile=~/.ssh/id_rsa
@@ -132,7 +127,7 @@ function mysshfs_list_mounted {
 
 # Unmount remote directory
 function mysshfs_umount () {
-    ldir=$1
+    local ldir=$1
 
     if [ $# -ne 1 ]; then
         echo "Usage: mysshfs_umount LDIR"
@@ -140,7 +135,7 @@ function mysshfs_umount () {
     fi
 
     # unmount and remove empty dirs (for all mount points)
-    current_dir=`pwd`
+    local current_dir=`pwd`
     fusermount -u $ldir && cd $MYSSHFS_DIR && find -type d | grep -v '^\.$' | tac | xargs rmdir
     cd $current_dir
 }
@@ -158,38 +153,29 @@ if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
     source "$HOME/perl5/perlbrew/etc/bashrc"
 fi
 
+# add compiled perl6 to PATH
+if [ -d "/opt/rakudo-star-2017.10/bin" ]; then
+    PATH="/opt/rakudo-star-2017.10/bin:$PATH"
+fi
+if [ -d "/opt/rakudo-star-2017.10/share/perl6/site/bin" ]; then
+    PATH="/opt/rakudo-star-2017.10/share/perl6/site/bin:$PATH"
+fi
+
+##########
+# Golang #
+##########
+
+# add go's bin to PATH
+#if [ -d "$HOME/go/bin" ]; then
+#	PATH="$HOME/go/bin:$PATH"
+#fi
+export PATH=$PATH:$(go env GOPATH)/bin
+
 #####################
 # Various functions #
 #####################
 
-# Open up the todo list
-function todo () {
-    vi ~/todo.md
-}
-
-# Extract compressed files of various type
-function extract () {
-  if [ -f $1 ] ; then
-  case $1 in
-    *.tar.bz2) tar xvjf $1     ;;
-    *.tar.gz)  tar xvzf $1     ;;
-    *.bz2)     bunzip2 $1      ;;
-    *.rar)     unrar x $1      ;;
-    *.gz)      gunzip $1       ;;
-    *.tar)     tar xvf $1      ;;
-    *.tbz2)    tar xvjf $1     ;;
-    *.tgz)     tar xvzf $1     ;;
-    *.zip)     unzip $1        ;;
-    *.Z)       uncompress $1   ;;
-    *.7z)      7z x $1         ;;
-    *)         echo "'$1' cannot be extracted via >extract<" ;;
-  esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-
-# Open my workshop
+# Open my workshop (atom version)
 function worka () {
     local proj=$(find \
         ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
@@ -199,7 +185,7 @@ function worka () {
     git pull
 }
 
-# Open my workshop
+# Open my workshop (vim version)
 function workv () {
     local proj=$(find \
         ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
@@ -217,6 +203,10 @@ function cdp () {
 
 	cd $(find $dir -type d | peco)
 }
+
+###########
+# Aliases #
+###########
 
 # some more ls aliases
 alias ll='ls -l'
@@ -242,19 +232,9 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# add compiled perl6 to PATH
-if [ -d "/opt/rakudo-star-2017.10/bin" ]; then
-    PATH="/opt/rakudo-star-2017.10/bin:$PATH"
-fi
-if [ -d "/opt/rakudo-star-2017.10/share/perl6/site/bin" ]; then
-    PATH="/opt/rakudo-star-2017.10/share/perl6/site/bin:$PATH"
-fi
-
-# add go's bin to PATH
-#if [ -d "$HOME/go/bin" ]; then
-#	PATH="$HOME/go/bin:$PATH"
-#fi
-export PATH=$PATH:$(go env GOPATH)/bin
+#########
+# Varia #
+#########
 
 export VAGRANT_DETECTED_OS="$(uname)"
 
@@ -273,6 +253,11 @@ runonce myquote -s
 # SSH hostnames completion (based on ~/.ssh/config)
 if [ -e ~/.ssh_bash_completion ]; then
     source ~/.ssh_bash_completion
+fi
+
+# Git completions
+if [ -f ~/.git-completion.bash ]; then
+    source ~/.git-completion.bash
 fi
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
