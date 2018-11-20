@@ -102,6 +102,11 @@ my $plugins = [
     #    remote => 'https://github.com/w0rp/ale.git',
     #    local  => "$bundle_dir/ale",
     #},
+    {
+        name   => 'vim-go',
+        remote => 'https://github.com/fatih/vim-go.git',
+        local  => "$bundle_dir/vim-go",
+    },
 ];
 
 for my $plugin (@$plugins) {
