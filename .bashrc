@@ -69,8 +69,8 @@ txtrst='\e[0m' # Text Reset
 # Git stuff in prompt
 function git_info {
     git status > /dev/null 2>&1 || return
-    msg=$(git branch | perl -ne 'print "$_" if s/^\*\s+// && chomp')
-    status_lines=$(git status --porcelain | wc -l)
+    local msg=$(git branch | perl -ne 'print "$_" if s/^\*\s+// && chomp')
+    local status_lines=$(git status --porcelain | wc -l)
     [[ $status_lines -ne 0 ]] && msg="$msg !"
     git status | grep -q push && msg="$msg ^"
     git status | grep -q pull && mgs="$msg v"
@@ -92,7 +92,6 @@ function exit_code {
 
 # \[\] around colors are needed for mintty/cygwin
 PS1="\$(exit_code) \u@\[${txtcyn}\]\h\[${txtrst}\] \W [\$(git_info)] \$(n_jobs) \[${bldgrn}\]\$ \[${txtrst}\]"
-
 
 # Git
 if [ -f ~/.git-completion.bash ]; then
