@@ -86,8 +86,8 @@ function _n_jobs {
 # Smiling prompt (-:
 function _exit_code {
     local EXIT="$?"
-    local msg='(-:'
-    [[ $EXIT -ne 0 ]] && msg=')-:'
+    local msg=':-)'
+    [[ $EXIT -ne 0 ]] && msg=':-('
     echo $msg
 }
 
