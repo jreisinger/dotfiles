@@ -2,6 +2,7 @@
   core:
     disabledPackages: [
       "spell-check"
+      "linter"
     ]
     excludeVcsIgnoredPaths: false
     telemetryConsent: "limited"
@@ -15,9 +16,11 @@
     normalizeIndentOnPaste: true
     showIndentGuide: true
     softWrap: true
+    tabLength: 4
   "exception-reporting":
     userId: "57a4e154-a69e-4573-9d05-687caffa705b"
-  "linter-ui-default": {}
+  "linter-ui-default":
+    panelHeight: 380
   "split-diff":
     ignoreWhitespace: true
   "tabs-to-spaces":
