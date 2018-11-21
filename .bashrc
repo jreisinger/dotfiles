@@ -91,8 +91,11 @@ function _exit_code {
     echo $msg
 }
 
+# Number of trailing directory components to retain when expanding the \w and \W prompt string escapes
+export PROMPT_DIRTRIM=2
+
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(_exit_code) \[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]> \[${txtrst}\]"
+PS1="\$(_exit_code) \[${txtcyn}\]\h\[${txtrst}\] \w [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]> \[${txtrst}\]"
 
 #########
 # SSHFS #
