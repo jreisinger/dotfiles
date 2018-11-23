@@ -3,6 +3,11 @@
     disabledPackages: [
       "spell-check"
       "linter"
+      "go-debug"
+      "go-imports"
+      "go-plus"
+      "go-signature-statusbar"
+      "ide-golang"
     ]
     excludeVcsIgnoredPaths: false
     telemetryConsent: "limited"
