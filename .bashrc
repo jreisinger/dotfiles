@@ -173,7 +173,7 @@ fi
 #if [ -d "$HOME/go/bin" ]; then
 #	PATH="$HOME/go/bin:$PATH"
 #fi
-export PATH=$PATH:$(go env GOPATH)/bin
+#export PATH=$PATH:$(go env GOPATH)/bin
 
 #####################
 # Various functions #
