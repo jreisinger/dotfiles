@@ -199,21 +199,6 @@ function workv () {
 	vim
 }
 
-# Enhanced cd
-function cdp () {
-	# start in dir given as arg or in home dir
-	local dir=$1
-	[[ $dir == "" ]] && dir=$HOME
-
-	cd $(find $dir -type d | peco)
-}
-
-function vip () {
-	local file=$(find -type f | peco)
-	cd $(dirname $file)
-	vim $(basename $file)
-}
-
 ###########
 # Aliases #
 ###########
