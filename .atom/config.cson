@@ -17,7 +17,6 @@
     ]
   editor:
     autoIndentOnPaste: true
-    fontSize: 12
     normalizeIndentOnPaste: true
     showIndentGuide: true
     softWrap: true

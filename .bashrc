@@ -170,9 +170,9 @@ fi
 ##########
 
 # add go's bin to PATH
-#if [ -d "$HOME/go/bin" ]; then
-#	PATH="$HOME/go/bin:$PATH"
-#fi
+if [ -d "$HOME/go/bin" ]; then
+	PATH="$HOME/go/bin:$PATH"
+fi
 #export PATH=$PATH:$(go env GOPATH)/bin
 
 #####################
@@ -206,6 +206,12 @@ function cdp () {
 	[[ $dir == "" ]] && dir=$HOME
 
 	cd $(find $dir -type d | peco)
+}
+
+function vip () {
+	local file=$(find -type f | peco)
+	cd $(dirname $file)
+	vim $(basename $file)
 }
 
 ###########
