@@ -79,7 +79,7 @@ function _git_info {
 
 # Backgroup jobs in prompt
 function _n_jobs {
-	local cnt=$(jobs | grep -E '\[\d+]' | wc -l)
+	local cnt=$(jobs | grep -E '\[[:0-9:]]' | wc -l)
 	echo $cnt
 }
 
