@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
+#
+# Based on https://pymotw.com/3/cmd/index.html
 
 import cmd
 
-class WTF(cmd.Cmd):
+class InteractiveOrCommandline(cmd.Cmd):
     def do_docker(self, line):
-        """docker cli tool options
-        """
+        print('# docker cli tool options')
         print('docker ps --all --format "table {{.Image}}\\t{{.Status}}\\t{{.Ports}}\\t{{.Names}}"')
 
-    def do_docker_basic_pkgs(self, line):
-        """(Ubuntu) package names containing basic tools
-        """
+        print("""# (Ubuntu) package names containing basic tools""")
         print("apt-get update && apt-get install procps net-tools vim")
 
-    def do_date_fmt(self, line):
-        """bash timestamps
+    def do_date(self, line):
+        """date formats
         """
 
         print('''
@@ -33,17 +32,14 @@ ISO8601 UTC timestamp         | date --utc +%FT%TZ
 ISO8601 Local TZ timestamp    | date +%FT%T%Z              
 ''')
 
-    def do_vim_config(self, line):
-        """vim config options I often use
-        """
+    def do_vim(self, line):
+        print('# vim config options I often use')
         print(':set tabstop=4 shiftwidth=4 expandtab')
         print(':set nofoldenable')
         print(':set textwidth=0')
         print(':syntax off')
 
-    def do_vim_find_files(self, line):
-        """find files within Vim
-        """
+        print('# find files within Vim')
         print(':grep -iR what .')
         print(':cw')
 
@@ -57,4 +53,8 @@ ISO8601 Local TZ timestamp    | date +%FT%T%Z
         return True
 
 if __name__ == '__main__':
-    WTF().cmdloop()
+    import sys
+    if len(sys.argv) > 1:
+        InteractiveOrCommandline().onecmd(' '.join(sys.argv[1:]))
+    else:
+        InteractiveOrCommandline().cmdloop()
