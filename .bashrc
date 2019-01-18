@@ -79,7 +79,7 @@ function _git_info {
 
 # Backgroup jobs in prompt
 function _n_jobs {
-	local cnt=$(jobs | grep -E '\[\d+]' | wc -l)
+	local cnt=$(jobs | grep -E '\[[:0-9:]]' | wc -l)
 	echo $cnt
 }
 
@@ -178,16 +178,6 @@ fi
 #####################
 # Various functions #
 #####################
-
-# Open my workshop (atom version)
-function worka () {
-    local proj=$(find \
-        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
-        -maxdepth 1 -type d | peco)
-    atom -a $proj
-    cd $proj
-    git pull
-}
 
 # Open my workshop (vim version)
 function workv () {

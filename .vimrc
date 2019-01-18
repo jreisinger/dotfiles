@@ -67,6 +67,7 @@ set pastetoggle=<F2>
 set showmode
 
 " folding
+set nofoldenable " disable by default
 set foldmethod=manual
 inoremap <F9> <C-O>za
 nnoremap <F9> za

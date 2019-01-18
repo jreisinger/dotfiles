@@ -40,7 +40,7 @@ while (<$fh>) {
         $link =~ s/[\(\)\@]//g;
 
         if ( $hash_count <= 2 ) {    # max indent level is 2
-            push @TOC, " " x ( $hash_count - 1 ) . "* [$title]($link)";
+            push @TOC, "    " x ( $hash_count - 1 ) . "* [$title]($link)";
         }
     }
 }
