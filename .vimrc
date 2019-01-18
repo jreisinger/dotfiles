@@ -4,6 +4,7 @@ call pathogen#infect()
 " NERDTree
 nnoremap <F4> :NERDTreeToggle<CR>
 nnoremap <t> :NERDTreeMapOpenInTab<CR>
+set encoding=utf-8 " MacBook fix
 
 " open BufExplorer
 nnoremap <F5> :BufExplorer<CR>
@@ -166,6 +167,3 @@ nmap <silent> <RIGHT>           :cnext<CR>
 nmap <silent> <RIGHT><RIGHT>    :cnfile<CR><C-G>
 nmap <silent> <LEFT>            :cprev<CR>
 nmap <silent> <LEFT><LEFT>      :cpfile<CR><C-G>
-
-" Macbook fixes
-set encoding=utf-8
