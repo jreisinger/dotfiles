@@ -179,16 +179,6 @@ fi
 # Various functions #
 #####################
 
-# Open my workshop (atom version)
-function worka () {
-    local proj=$(find \
-        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
-        -maxdepth 1 -type d | peco)
-    atom -a $proj
-    cd $proj
-    git pull
-}
-
 # Open my workshop (vim version)
 function workv () {
     local proj=$(find \
