@@ -5,15 +5,13 @@
 import cmd
 
 class InteractiveOrCommandline(cmd.Cmd):
-    def do_docker(self, line):
-        print('# docker cli tool options')
-        print('docker ps --all --format "table {{.Image}}\\t{{.Status}}\\t{{.Ports}}\\t{{.Names}}"')
-
-        print("""# (Ubuntu) package names containing basic tools""")
+    def do_docker_pkgs(self, line):
+        """(Ubuntu) packages containing basic tools
+        """
         print("apt-get update && apt-get install procps net-tools vim")
 
     def do_date(self, line):
-        """date formats
+        """common `date` formats
         """
 
         print('''
@@ -32,14 +30,17 @@ ISO8601 UTC timestamp         | date --utc +%FT%TZ
 ISO8601 Local TZ timestamp    | date +%FT%T%Z              
 ''')
 
-    def do_vim(self, line):
-        print('# vim config options I often use')
+    def do_vim_config(self, line):
+        """Vim config options I often use
+        """
         print(':set tabstop=4 shiftwidth=4 expandtab')
         print(':set nofoldenable')
         print(':set textwidth=0')
         print(':syntax off')
 
-        print('# find files within Vim')
+    def do_vim_find(self, line):
+        """find files within Vim
+        """
         print(':grep -iR what .')
         print(':cw')
 
