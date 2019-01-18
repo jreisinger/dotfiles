@@ -43,6 +43,11 @@ ISO8601 Local TZ timestamp    | date +%FT%T%Z
         """
         print('docker ps --all --format "table {{.Image}}\\t{{.Status}}\\t{{.Ports}}\\t{{.Names}}"')
 
+    def do_conv_hex2dec(self, line):
+        """convert from hex to decimal
+        """
+        print("""perl -le 'print hex "0xAf"'""")
+        print("""perl -le 'print hex   "aF"' # same""")
 
     def do_EOF(self, line):
         return True
