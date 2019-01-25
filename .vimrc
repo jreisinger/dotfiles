@@ -1,3 +1,5 @@
+"https://raw.githubusercontent.com/thoughtstream/Damian-Conway-s-Vim-Setup/master/.vimrc
+
 "====[ Plugins and templates ]=================================================
 
 " activate pathogen.vim
