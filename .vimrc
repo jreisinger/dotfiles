@@ -84,22 +84,18 @@ autocmd BufWinEnter *.* silent loadview "load folds
 
 "====[ Toggle visibility of naughty characters ]==============================
 
-set list!
-" highlight tabs and trailing spaces
-"set listchars=tab:>-,trail:-
-
 " Make naughty characters visible...
 " (uBB is right double angle, uB7 is middle dot)
 set lcs=tab:»·,trail:␣,nbsp:˷
-highlight InvisibleSpaces ctermfg=Black ctermbg=Black
-call matchadd('InvisibleSpaces', '\S\@<=\s\+\%#\ze\s*$', -10)
+"highlight InvisibleSpaces ctermfg=Black ctermbg=Black
+"call matchadd('InvisibleSpaces', '\S\@<=\s\+\%#\ze\s*$', -10)
 
 augroup VisibleNaughtiness
     autocmd!
     autocmd BufEnter  *       set list
-    autocmd BufEnter  *       set list
     autocmd BufEnter  *.txt   set nolist
     autocmd BufEnter  *.vp*   set nolist
+    autocmd BufEnter  *.go    set nolist
     autocmd BufEnter  *       if !&modifiable
     autocmd BufEnter  *           set nolist
     autocmd BufEnter  *       endif
