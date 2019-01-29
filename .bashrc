@@ -79,8 +79,8 @@ function _git_info {
 
 # Backgroup jobs in prompt
 function _n_jobs {
-	local cnt=$(jobs | grep -E '\[[:0-9:]]' | wc -l)
-	echo $cnt
+    local cnt=$(jobs | grep -E '\[[:0-9:]]' | wc -l)
+    echo $cnt
 }
 
 # Smiling prompt (-:
@@ -229,7 +229,11 @@ if [ -f ~/ansible/hacking/env-setup ]; then
 fi
 
 # Upgrade my dotfiles but not always
-runonce -i 10080 perl5.18 ~/.../... supi
+if command -v perl5.18 > /dev/null 2>&1; then   # do we have perl5.18 binary?
+    runonce -i 10080 perl5.18 ~/.../... supi    # fix for Mac
+else
+    runonce -i 10080 ... supi
+fi
 runonce -i 10080 install_vim_stuff
 
 # Print quote but not always
