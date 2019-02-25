@@ -256,4 +256,4 @@ fi
 PROMPT_COMMAND='echo -ne "\033]0;$(pwd | perl -pe '\''$home=$ENV{HOME} ; s#$home#~#'\'')\007"'
 
 # kubernetes (k8s) autocompletion
-which kubectl > /dev/null && source <(kubectl completion bash)
+which kubectl > /dev/null 2>&1 && source <(kubectl completion bash)
