@@ -26,10 +26,6 @@ filetype plugin on              " enable templates
 set ic  " ignore case during search
 "set cursorline
 
-" Python completion (Ctrl-O-X). Needs: vim >= 7.0, vim-nox.
-" Problematic on cygwin.
-set ofu=syntaxcomplete#Complete
-
 " Spaces instead of tabs (looks the same in all editors) ...
 set expandtab       " insert space(s) when tab key is pressed
 set tabstop=4       " number of spaces inserted
@@ -101,7 +97,16 @@ augroup VisibleNaughtiness
     autocmd BufEnter  *       endif
 augroup END
 
-"====[ Perl stuff ]===========================================================
+"====[ Python stuff ]==========================================================
+
+" Python completion (Ctrl-O-X). Needs: vim >= 7.0, vim-nox.
+" Problematic on cygwin.
+set ofu=syntaxcomplete#Complete
+
+"====[ Golang stuff ]==========================================================
+"imap errh if err != nil {<CR>fmt.Fprintf(os.Stderr, "%v\n", err)<CR>os.Exit(1)<CR>}
+
+"====[ Perl stuff ]============================================================
 
 " syntax color complex things like @{${"foo"}}
 let perl_extended_vars = 1
@@ -149,7 +154,7 @@ set makeprg=perl\ -c\ -MVi::QuickFix\ %
 set errorformat+=%m\ at\ %f\ line\ %l\.
 set errorformat+=%m\ at\ %f\ line\ %l
 
-"=====[ Show help files in a new tab, plus add a shortcut for helpg ]=========
+"=====[ Show help files in a new tab, plus add a shortcut for helpg ]==========
 
 let g:help_in_tabs = 1
 
@@ -181,7 +186,7 @@ endfunction
 "Expand hh -> helpg...
 cmap <expr> hh CommandExpandAtCol1('hh','helpg ')
 
-"====[ Move through search results of ]=======================================
+"====[ Move through search results of ]========================================
 "
 " :helpgrep PATTERN
 " :vimgrep /PATTERN/ FILES...
@@ -189,4 +194,3 @@ nmap <silent> <RIGHT>           :cnext<CR>
 nmap <silent> <RIGHT><RIGHT>    :cnfile<CR><C-G>
 nmap <silent> <LEFT>            :cprev<CR>
 nmap <silent> <LEFT><LEFT>      :cpfile<CR><C-G>
-
