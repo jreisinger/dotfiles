@@ -194,3 +194,11 @@ nmap <silent> <RIGHT>           :cnext<CR>
 nmap <silent> <RIGHT><RIGHT>    :cnfile<CR><C-G>
 nmap <silent> <LEFT>            :cprev<CR>
 nmap <silent> <LEFT><LEFT>      :cpfile<CR><C-G>
+
+"====[ Stop vim from messing up my indentation on comments ] ==================
+set nosmartindent
+set cindent
+filetype plugin indent on
+set cinkeys-=0#
+set indentkeys-=0#
+autocmd FileType * set cindent "some file types override it
