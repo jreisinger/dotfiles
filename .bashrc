@@ -10,7 +10,8 @@
 
 export HISTSIZE=9999
 export HISTFILESIZE=9999
-export HISTTIMEFORMAT="%d.%m.%y %T "
+# not useful and probably doesn't allow removing duplicates
+#export HISTTIMEFORMAT="%d.%m.%y %T "
 # don't put duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignoreboth
 
