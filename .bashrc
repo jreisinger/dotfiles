@@ -264,7 +264,8 @@ if command -v perl5.18 > /dev/null 2>&1; then   # do we have perl5.18 binary?
 else
     runonce -i 10080 ... supi
 fi
-runonce -i 10080 install_vim_stuff
+#runonce -i 10080 install_vim_stuff
+runonce -i 10080 runp ~/.install_stuff.txt
 
 # Print quote but not always
 runonce myquote -s
