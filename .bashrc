@@ -98,6 +98,10 @@ export PROMPT_DIRTRIM=2
 # \[\] around colors are needed for mintty/cygwin
 PS1="\$(_exit_code) \[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]$ \[${txtrst}\]"
 
+# Show dir path in (Gnome) terminal emulator
+# https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
+PROMPT_COMMAND='echo -ne "\033]0;$(pwd | perl -pe '\''$home=$ENV{HOME} ; s#$home#~#'\'')\007"'
+
 #########
 # SSHFS #
 #########
@@ -187,7 +191,7 @@ function workv () {
         -maxdepth 1 -type d | peco)
     cd $proj
     git pull
-	vim
+    vim
 }
 
 ###########
@@ -218,6 +222,25 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+###############
+# Completions #
+###############
+
+# SSH hostnames completion (based on ~/.ssh/config)
+if [ -e ~/.ssh_bash_completion ]; then
+    source ~/.ssh_bash_completion
+fi
+
+# Git completions
+if [ -f ~/.git-completion.bash ]; then
+    source ~/.git-completion.bash
+fi
+
+# kubernetes (k8s) autocompletion
+if which kubectl > /dev/null 2>&1; then
+    source <(kubectl completion bash)
+fi
+
 #########
 # Varia #
 #########
@@ -240,23 +263,4 @@ runonce -i 10080 install_vim_stuff
 # Print quote but not always
 runonce myquote -s
 
-# SSH hostnames completion (based on ~/.ssh/config)
-if [ -e ~/.ssh_bash_completion ]; then
-    source ~/.ssh_bash_completion
-fi
-
-# Git completions
-if [ -f ~/.git-completion.bash ]; then
-    source ~/.git-completion.bash
-fi
-
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# Show dir path in Gnome terminal
-# https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
-PROMPT_COMMAND='echo -ne "\033]0;$(pwd | perl -pe '\''$home=$ENV{HOME} ; s#$home#~#'\'')\007"'
-
-# kubernetes (k8s) autocompletion
-if which kubectl > /dev/null 2>&1; then
-    source <(kubectl completion bash)
-fi
