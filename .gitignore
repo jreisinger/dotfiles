@@ -1,1 +1,3 @@
 *.swp
+# a binary file (you need the right sys and arch)
+bin/runp
