@@ -194,6 +194,15 @@ function workv () {
     vim
 }
 
+# Just take me the the project dir and pull
+function work () {
+    local proj=$(find \
+        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
+        -maxdepth 1 -type d | peco)
+    cd $proj
+    git pull
+}
+
 ###########
 # Aliases #
 ###########
@@ -265,7 +274,7 @@ else
     runonce -i 10080 ... supi
 fi
 #runonce -i 10080 install_vim_stuff
-runonce -i 10080 runp ~/.install_stuff.txt
+runonce -i 10080 ~/git/hub/runp/runp ~/git/hub/runp/commands/install-my-stuff.txt
 
 # Print quote but not always
 runonce myquote -s
