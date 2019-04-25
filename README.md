@@ -27,6 +27,7 @@ Installation
 
 (3) Install Vim stuff (OPTIONAL)
 
-    ~/bin/install_vim_stuff
+    #~/bin/install_vim_stuff
+    ~/git/hub/runp/runp ~/git/hub/runp/commands/install-my-stuff.txt
 
 (4) [Get your Git repos](https://github.com/jreisinger/gitmeta) (OPTIONAL)
