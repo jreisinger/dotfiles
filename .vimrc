@@ -2,8 +2,8 @@
 
 "====[ Plugins and templates ]=================================================
 
-" activate pathogen.vim
-call pathogen#infect()
+" activate pathogen.vim -> not needed since vim8: https://vi.stackexchange.com/questions/9522/what-is-the-vim8-package-feature-and-how-should-i-use-it
+"call pathogen#infect()
 
 " NERDTree
 nnoremap <F4> :NERDTreeToggle<CR>
@@ -23,32 +23,13 @@ filetype on                     " try to detect filetypes
 filetype plugin indent on       " enable loading indent file for filetype
 filetype plugin on              " enable templates
 
-set ic  " ignore case during search
-"set cursorline
+set smartcase " be smart when searching
 
 " Spaces instead of tabs (looks the same in all editors) ...
 set expandtab       " insert space(s) when tab key is pressed
 set tabstop=4       " number of spaces inserted
 set shiftwidth=4    " number of spaces for indentation
 " more: http://vim.wikia.com/wiki/Converting_tabs_to_spaces
-
-" statusline
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-"              | | | | |  |   |      |  |     |    |
-"              | | | | |  |   |      |  |     |    + current
-"              | | | | |  |   |      |  |     |       column
-"              | | | | |  |   |      |  |     +-- current line
-"              | | | | |  |   |      |  +-- current % into file
-"              | | | | |  |   |      +-- current syntax in
-"              | | | | |  |   |          square brackets
-"              | | | | |  |   +-- current fileformat
-"              | | | | |  +-- number of lines
-"              | | | | +-- preview flag in square brackets
-"              | | | +-- help flag in square brackets
-"              | | +-- readonly flag in square brackets
-"              | +-- rodified flag in square brackets
-"              +-- full path to file in the buffer
-set laststatus=2
 
 set textwidth=79
 set nu          " show line numbers
@@ -74,9 +55,6 @@ onoremap <F9> <C-C>za
 vnoremap <F9> zf
 autocmd BufWinLeave *.* mkview          "save folds
 autocmd BufWinEnter *.* silent loadview "load folds
-
-" Enable spell checking
-"set spell
 
 "====[ Toggle visibility of naughty characters ]==============================
 
@@ -154,51 +132,9 @@ set makeprg=perl\ -c\ -MVi::QuickFix\ %
 set errorformat+=%m\ at\ %f\ line\ %l\.
 set errorformat+=%m\ at\ %f\ line\ %l
 
-"=====[ Show help files in a new tab, plus add a shortcut for helpg ]==========
-
-let g:help_in_tabs = 1
-
-nmap <silent> H  :let g:help_in_tabs = !g:help_in_tabs<CR>
-
-"Only apply to .txt files...
-augroup HelpInTabs
-    autocmd!
-    autocmd BufEnter  *.txt   call HelpInNewTab()
-augroup END
-
-"Only apply to help files...
-function! HelpInNewTab ()
-    if &buftype == 'help' && g:help_in_tabs
-        "Convert the help window to a tab...
-        execute "normal \<C-W>T"
-    endif
-endfunction
-
-"Simulate a regular cmap, but only if the expansion starts at column 1...
-function! CommandExpandAtCol1 (from, to)
-    if strlen(getcmdline()) || getcmdtype() != ':'
-        return a:from
-    else
-        return a:to
-    endif
-endfunction
-
-"Expand hh -> helpg...
-cmap <expr> hh CommandExpandAtCol1('hh','helpg ')
-
-"====[ Move through search results of ]========================================
-"
-" :helpgrep PATTERN
-" :vimgrep /PATTERN/ FILES...
-nmap <silent> <RIGHT>           :cnext<CR>
-nmap <silent> <RIGHT><RIGHT>    :cnfile<CR><C-G>
-nmap <silent> <LEFT>            :cprev<CR>
-nmap <silent> <LEFT><LEFT>      :cpfile<CR><C-G>
-
 "====[ Stop vim from messing up my indentation on comments ] ==================
 set nosmartindent
 set cindent
-filetype plugin indent on
 set cinkeys-=0#
 set indentkeys-=0#
 autocmd FileType * set cindent "some file types override it
