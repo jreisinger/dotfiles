@@ -1,8 +1,4 @@
-# My Linux/Unix workshop configuration
-
-My personal configuration files and tools (see `bin` directory).
-
-## Installation
+My Linux/Unix workshop configuration and tools (see `bin` directory).
 
 (1) Install packages (remove `#` to include optional but recommended packages)
 
