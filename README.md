@@ -1,6 +1,6 @@
 My Linux/Unix workshop configuration and tools (see `bin` directory).
 
-Install dot files manager
+To use it install dot files [manager](https://github.com/ingydotnet/...)
 
     cd
     git clone git://github.com/ingydotnet/....git
