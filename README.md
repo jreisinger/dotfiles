@@ -1,10 +1,6 @@
 My Linux/Unix workshop configuration and tools (see `bin` directory).
 
-(1) Install packages (remove `#` to include optional but recommended packages)
-
-    sudo apt-get install git vim screen cpio
-
-(2) Install dot files
+Install dot files manager
 
     cd
     git clone git://github.com/ingydotnet/....git
@@ -13,9 +9,4 @@ My Linux/Unix workshop configuration and tools (see `bin` directory).
     .../... update
     .../... install
     
-... or just copy the files.
-
-(3) Install Vim + other stuff (OPTIONAL)
-
-    #~/bin/install_vim_stuff
-    ~/git/hub/runp/runp ~/git/hub/runp/commands/install-my-stuff.txt
+... or just copy the dot files.
