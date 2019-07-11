@@ -274,6 +274,7 @@ else
     runonce -i 10080 ... supi
 fi
 #runonce -i 10080 install_vim_stuff
+(cd ~/git/hub/runp && git pull)
 runonce -i 10080 ~/git/hub/runp/runp ~/git/hub/runp/commands/install-my-stuff.txt
 
 # Print quote but not always
