@@ -78,29 +78,6 @@ if [ -d "$HOME/go/bin" ]; then
 fi
 #export PATH=$PATH:$(go env GOPATH)/bin
 
-#####################
-# Various functions #
-#####################
-
-# Open my workshop (vim version)
-function workv () {
-    local proj=$(find \
-        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
-        -maxdepth 1 -type d | peco)
-    cd $proj
-    git pull
-    vim
-}
-
-# Just take me the the project dir and pull
-function work () {
-    local proj=$(find \
-        ~/git/hub ~/git/lab ~/go/src/github.com/jreisinger \
-        -maxdepth 1 -type d | peco)
-    cd $proj
-    git pull
-}
-
 ###########
 # Aliases #
 ###########
