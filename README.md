@@ -8,5 +8,5 @@ To use it install dot files [manager](https://github.com/ingydotnet/...)
     vi .../conf
     .../... update
     .../... install
-    
+
 ... or just copy the dot files.
