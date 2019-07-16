@@ -92,6 +92,9 @@ if [ -d "$HOME/go/bin" ]; then
 fi
 #export PATH=$PATH:$(go env GOPATH)/bin
 
+# dedup PATH
+PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
+
 ###############
 # Completions #
 ###############
