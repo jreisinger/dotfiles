@@ -15,19 +15,6 @@ export HISTFILESIZE=9999
 # don't store duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 
-#####################
-# Colorful terminal #
-#####################
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ] || [ -x /bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto -h --group-directories-first'
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
-fi
-
 ################
 # PROMPT (PS1) #
 ################
@@ -82,12 +69,16 @@ fi
 # Aliases #
 ###########
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ] || [ -x /bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto -h --group-directories-first'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
 
-# prevents accidentally clobbering files
+# prevent accidentally clobbering files
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -95,11 +86,13 @@ alias mv='mv -i'
 # other aliases
 alias h='history'
 alias j='jobs -l'
-alias path='echo -e ${PATH//:/\\n}'
-alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 if [ -e /usr/bin/vim ]; then
     alias vi='vim'
 fi
+
+########
+# PATH # 
+########
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
@@ -107,8 +100,8 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # add aws to PATH
-if [ -d "/home/reisinge/.local/bin" ] ; then
-    PATH="/home/reisinge/.local/bin:$PATH"
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
 fi
 
 ###############
