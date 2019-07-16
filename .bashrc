@@ -32,7 +32,7 @@ function _exit_code {
 }
 
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(_exit_code) \[${bldgrn}\]$ \[${txtrst}\]"
+PS1="\$(_exit_code) \h \w \j \[${bldgrn}\]$ \[${txtrst}\]"
 
 ########
 # Perl #
