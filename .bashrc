@@ -102,53 +102,6 @@ PS1="\$(_exit_code) \[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) 
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
 PROMPT_COMMAND='echo -ne "\033]0;$(pwd | perl -pe '\''$home=$ENV{HOME} ; s#$home#~#'\'')\007"'
 
-#########
-# SSHFS #
-#########
-
-# You might need to uncomment user_allow_other in /etc/fuse.conf and add
-# yourself to fuse group.
-
-MYSSHFS_DIR="$HOME/mysshfs";
-[ -d $MYSSHFS_DIR ] || mkdir $MYSSHFS_DIR
-
-# Mount remote directory over SSH
-function mysshfs_mount () {
-    local user=$1
-    local host=$2
-    local dir=$3
-
-    if [ $# -ne 3 ]; then
-        echo "Usage: sshfs_mount USER HOST RDIR"
-        return 1
-    fi
-
-    local ldir="$MYSSHFS_DIR/$host/$dir"
-
-    [ -d $ldir ] || mkdir -p $ldir
-    sshfs -o allow_other $user@$host:$dir $ldir -o IdentityFile=~/.ssh/id_rsa
-}
-
-# List mounted remote directories
-function mysshfs_list_mounted {
-    mount | grep sshfs
-}
-
-# Unmount remote directory
-function mysshfs_umount () {
-    local ldir=$1
-
-    if [ $# -ne 1 ]; then
-        echo "Usage: mysshfs_umount LDIR"
-        return 1
-    fi
-
-    # unmount and remove empty dirs (for all mount points)
-    local current_dir=`pwd`
-    fusermount -u $ldir && cd $MYSSHFS_DIR && find -type d | grep -v '^\.$' | tac | xargs rmdir
-    cd $current_dir
-}
-
 ########
 # Perl #
 ########
