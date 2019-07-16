@@ -28,63 +28,15 @@ if [ -x /usr/bin/dircolors ] || [ -x /bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-# Terminal colors
-txtblk='\e[0;30m' # Black - Regular
-txtred='\e[0;31m' # Red
-txtgrn='\e[0;32m' # Green
-txtylw='\e[0;33m' # Yellow
-txtblu='\e[0;34m' # Blue
-txtpur='\e[0;35m' # Purple
-txtcyn='\e[0;36m' # Cyan
-txtwht='\e[0;37m' # White
-bldblk='\e[1;30m' # Black - Bold
-bldred='\e[1;31m' # Red
-bldgrn='\e[1;32m' # Green
-bldylw='\e[1;33m' # Yellow
-bldblu='\e[1;34m' # Blue
-bldpur='\e[1;35m' # Purple
-bldcyn='\e[1;36m' # Cyan
-bldwht='\e[1;37m' # White
-unkblk='\e[4;30m' # Black - Underline
-undred='\e[4;31m' # Red
-undgrn='\e[4;32m' # Green
-undylw='\e[4;33m' # Yellow
-undblu='\e[4;34m' # Blue
-undpur='\e[4;35m' # Purple
-undcyn='\e[4;36m' # Cyan
-undwht='\e[4;37m' # White
-bakblk='\e[40m' # Black - Background
-bakred='\e[41m' # Red
-badgrn='\e[42m' # Green
-bakylw='\e[43m' # Yellow
-bakblu='\e[44m' # Blue
-bakpur='\e[45m' # Purple
-bakcyn='\e[46m' # Cyan
-bakwht='\e[47m' # White
-txtrst='\e[0m' # Text Reset
-
 ################
 # PROMPT (PS1) #
 ################
 
-# Git stuff in prompt
-function _git_info {
-    git status > /dev/null 2>&1 || return
-    local msg=$(git branch | perl -ne 'print "$_" if s/^\*\s+// && chomp')
-    local status_lines=$(git status --porcelain | wc -l)
-    [[ $status_lines -ne 0 ]] && msg="$msg !"
-    git status | grep -q push && msg="$msg ^"
-    git status | grep -q pull && mgs="$msg v"
-    echo $msg
-}
+# Terminal colors
+bldgrn='\e[1;32m'   # Green
+txtrst='\e[0m'      # Text Reset
 
-# Backgroup jobs in prompt
-function _n_jobs {
-    local cnt=$(jobs | grep -E '\[[:0-9:]]' | wc -l)
-    echo $cnt
-}
-
-# Smiling prompt (-:
+# Smiling prompt :-)
 function _exit_code {
     local EXIT="$?"
     local msg=':-)'
@@ -92,15 +44,8 @@ function _exit_code {
     echo $msg
 }
 
-# Number of trailing directory components to retain when expanding the \w and \W prompt string escapes
-export PROMPT_DIRTRIM=2
-
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(_exit_code) \[${txtcyn}\]\h\[${txtrst}\] \W [\$(_git_info)] \$(_n_jobs) \[${bldgrn}\]$ \[${txtrst}\]"
-
-# Show dir path in (Gnome) terminal emulator
-# https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
-PROMPT_COMMAND='echo -ne "\033]0;$(pwd | perl -pe '\''$home=$ENV{HOME} ; s#$home#~#'\'')\007"'
+PS1="\$(_exit_code) \[${bldgrn}\]$ \[${txtrst}\]"
 
 ########
 # Perl #
