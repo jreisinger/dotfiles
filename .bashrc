@@ -123,6 +123,8 @@ fi
 # kubernetes (k8s) autocompletion
 if which kubectl > /dev/null 2>&1; then
     source <(kubectl completion bash)
+fi
+if [ -e /usr/share/bash-completion/bash_completion ]; then
     source /usr/share/bash-completion/bash_completion
 fi
 
