@@ -231,6 +231,11 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# add aws to PATH
+if [ -d "/home/reisinge/.local/bin" ] ; then
+    PATH="/home/reisinge/.local/bin:$PATH"
+fi
+
 ###############
 # Completions #
 ###############
@@ -254,6 +259,7 @@ fi
 # kubernetes (k8s) autocompletion
 if which kubectl > /dev/null 2>&1; then
     source <(kubectl completion bash)
+    source /usr/share/bash-completion/bash_completion
 fi
 
 #########
