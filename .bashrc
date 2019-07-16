@@ -47,24 +47,6 @@ if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
     source "$HOME/perl5/perlbrew/etc/bashrc"
 fi
 
-# add compiled perl6 to PATH
-if [ -d "/opt/rakudo-star-2017.10/bin" ]; then
-    PATH="/opt/rakudo-star-2017.10/bin:$PATH"
-fi
-if [ -d "/opt/rakudo-star-2017.10/share/perl6/site/bin" ]; then
-    PATH="/opt/rakudo-star-2017.10/share/perl6/site/bin:$PATH"
-fi
-
-##########
-# Golang #
-##########
-
-# add go's bin to PATH
-if [ -d "$HOME/go/bin" ]; then
-	PATH="$HOME/go/bin:$PATH"
-fi
-#export PATH=$PATH:$(go env GOPATH)/bin
-
 ###########
 # Aliases #
 ###########
@@ -103,6 +85,12 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+# add go's bin to PATH
+if [ -d "$HOME/go/bin" ]; then
+	PATH="$HOME/go/bin:$PATH"
+fi
+#export PATH=$PATH:$(go env GOPATH)/bin
 
 ###############
 # Completions #
