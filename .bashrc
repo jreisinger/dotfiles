@@ -73,7 +73,7 @@ if [ -e /usr/bin/vim ]; then
 fi
 
 ########
-# PATH # 
+# PATH #
 ########
 
 # set PATH so it includes user's private bin if it exists
@@ -88,7 +88,7 @@ fi
 
 # add go's bin to PATH
 if [ -d "$HOME/go/bin" ]; then
-	PATH="$HOME/go/bin:$PATH"
+    PATH="$HOME/go/bin:$PATH"
 fi
 #export PATH=$PATH:$(go env GOPATH)/bin
 
