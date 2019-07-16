@@ -19,18 +19,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# Golang
-if [ -d /usr/local/go/bin ]; then
-    PATH="$PATH:/usr/local/go/bin"
-fi
-
 # Environment variables
 export EDITOR=vi
 export VISUAL=vi
-
-PERL5LIB=$HOME/perl5/MyUtils/lib:$PERL5LIB; export PERL5LIB;
