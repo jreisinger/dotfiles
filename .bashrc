@@ -60,6 +60,11 @@ if [ -x /usr/bin/dircolors ] || [ -x /bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
+# some more ls aliases
+alias l='ls -CF'
+alias ll='ls -l'
+alias la='ls -A'
+
 # prevent accidentally clobbering files
 alias rm='rm -i'
 alias cp='cp -i'
