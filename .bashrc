@@ -126,6 +126,7 @@ function _ps1_exit_code {
 # what should be shown in the prompt
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM="auto"
 
 # \[\] around colors are needed for mintty/cygwin
 PS1="\$(_ps1_exit_code) \h \w \j $(__git_ps1 " (%s)") \[${bldgrn}\]$ \[${txtrst}\]"
