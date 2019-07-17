@@ -33,8 +33,8 @@ function _ps1_exit_code {
 
 function _ps1_git_status {
     local LINES=$(git status --porcelain | wc -l)
-    local msg=''
-    [[ $LINES -ne 0 ]] && msg='!'
+    local msg='[ ]'
+    [[ $LINES -ne 0 ]] && msg='[!]'
     echo $msg
 }
 
