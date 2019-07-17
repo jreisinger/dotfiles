@@ -24,15 +24,22 @@ bldgrn='\e[1;32m'   # Green
 txtrst='\e[0m'      # Text Reset
 
 # Smiling prompt
-function _exit_code {
+function _ps1_exit_code {
     local EXIT="$?"
     local msg='(-:'
     [[ $EXIT -ne 0 ]] && msg=')-:'
     echo $msg
 }
 
+function _ps1_git_status {
+    local LINES=$(git status --porcelain | wc -l)
+    local msg=''
+    [[ $LINES -ne 0 ]] && msg='!'
+    echo $msg
+}
+
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(_exit_code) \h \w \j \[${bldgrn}\]$ \[${txtrst}\]"
+PS1="\$(_ps1_exit_code) \h \w \j \$(_ps1_git_status) \[${bldgrn}\]$ \[${txtrst}\]"
 
 ########
 # Perl #
