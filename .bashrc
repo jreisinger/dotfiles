@@ -15,32 +15,6 @@ export HISTFILESIZE=9999
 # don't store duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 
-################
-# PROMPT (PS1) #
-################
-
-# Terminal colors
-bldgrn='\e[1;32m'   # Green
-txtrst='\e[0m'      # Text Reset
-
-# Smiling prompt
-function _ps1_exit_code {
-    local EXIT="$?"
-    local msg='(-:'
-    [[ $EXIT -ne 0 ]] && msg=')-:'
-    echo $msg
-}
-
-function _ps1_git_status {
-    local LINES=$(git status --porcelain | wc -l)
-    local msg='[ ]'
-    [[ $LINES -ne 0 ]] && msg='[!]'
-    echo $msg
-}
-
-# \[\] around colors are needed for mintty/cygwin
-PS1="\$(_ps1_exit_code) \h \w \j \$(_ps1_git_status) \[${bldgrn}\]$ \[${txtrst}\]"
-
 ########
 # Perl #
 ########
@@ -132,6 +106,29 @@ if which kubectl > /dev/null 2>&1; then
     source <(kubectl completion bash)
     source /usr/share/bash-completion/bash_completion
 fi
+
+################
+# PROMPT (PS1) #
+################
+
+# Terminal colors
+bldgrn='\e[1;32m'   # Green
+txtrst='\e[0m'      # Text Reset
+
+# Smiling prompt
+function _ps1_exit_code {
+    local EXIT="$?"
+    local msg='(-:'
+    [[ $EXIT -ne 0 ]] && msg=')-:'
+    echo $msg
+}
+
+# what should be shown in the prompt
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+
+# \[\] around colors are needed for mintty/cygwin
+PS1="\$(_ps1_exit_code) \h \w \j$(__git_ps1 " (%s)") \[${bldgrn}\]$ \[${txtrst}\]"
 
 #########
 # Varia #
