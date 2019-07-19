@@ -137,7 +137,7 @@ GIT_PS1_SHOWUNTRACKEDFILES=1
 GIT_PS1_SHOWUPSTREAM="auto"
 
 # how long the working path dir (\w) should be
-#PROMPT_DIRTRIM=2
+PROMPT_DIRTRIM=0
 
 # \[\] around colors are needed for mintty/cygwin
 PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') \n\[${bldgrn}\]$ \[${txtrst}\]"
