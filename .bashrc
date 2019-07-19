@@ -15,25 +15,6 @@ export HISTFILESIZE=9999
 # don't store duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 
-################
-# PROMPT (PS1) #
-################
-
-# Terminal colors
-bldgrn='\e[1;32m'   # Green
-txtrst='\e[0m'      # Text Reset
-
-# Smiling prompt
-function _exit_code {
-    local EXIT="$?"
-    local msg='(-:'
-    [[ $EXIT -ne 0 ]] && msg=')-:'
-    echo $msg
-}
-
-# \[\] around colors are needed for mintty/cygwin
-PS1="\$(_exit_code) \h \w \j \[${bldgrn}\]$ \[${txtrst}\]"
-
 ########
 # Perl #
 ########
@@ -109,7 +90,7 @@ function _get_git_version() {
     echo $ver
 }
 
-# Git completions
+# Download and source git completion
 if [ ! -f ~/.git-completion-$(_get_git_version).bash ]; then
     curl --silent https://raw.githubusercontent.com/git/git/v$(_get_git_version)/contrib/completion/git-completion.bash --output ~/.git-completion-$(_get_git_version).bash
 fi
@@ -127,6 +108,39 @@ fi
 if [ -e /usr/share/bash-completion/bash_completion ]; then
     source /usr/share/bash-completion/bash_completion
 fi
+
+################
+# PROMPT (PS1) #
+################
+
+# Terminal colors
+bldgrn='\e[1;32m'   # Green
+txtrst='\e[0m'      # Text Reset
+
+# Smiling prompt
+function _ps1_exit_code {
+    local EXIT="$?"
+    local msg='(-:'
+    [[ $EXIT -ne 0 ]] && msg=')-:'
+    echo $msg
+}
+
+# Download and source git prompt
+if [ ! -f ~/.git-prompt-$(_get_git_version).sh ]; then
+    curl --silent https://raw.githubusercontent.com/git/git/v$(_get_git_version)/contrib/completion/git-prompt.sh --output ~/.git-prompt-$(_get_git_version).sh
+fi
+source ~/.git-prompt-$(_get_git_version).sh
+
+# what should be shown in the git prompt
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM="auto"
+
+# how long the working path dir (\w) should be
+PROMPT_DIRTRIM=2
+
+# \[\] around colors are needed for mintty/cygwin
+PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') \[${bldgrn}\]$ \[${txtrst}\]"
 
 #########
 # Varia #
