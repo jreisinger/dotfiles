@@ -140,7 +140,7 @@ GIT_PS1_SHOWUPSTREAM="auto"
 PROMPT_DIRTRIM=2
 
 # \[\] around colors are needed for mintty/cygwin
-PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') \[${bldgrn}\]$ \[${txtrst}\]"
+PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') \n\[${bldgrn}\]$ \[${txtrst}\]"
 
 #########
 # Varia #
