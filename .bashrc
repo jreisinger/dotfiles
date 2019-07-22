@@ -72,6 +72,11 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# add to PATH dir where go binary is installed
+if [ -d /usr/local/go/bin ]; then
+    PATH="/usr/local/go/bin:$PATH"
+fi
+
 # add go's bin to PATH
 if [ -d "$HOME/go/bin" ]; then
     PATH="$HOME/go/bin:$PATH"
