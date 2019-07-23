@@ -136,10 +136,10 @@ if [ ! -f ~/.git-prompt-$(_get_git_version).sh ]; then
 fi
 source ~/.git-prompt-$(_get_git_version).sh
 
-# what should be shown in the git prompt
+# git prompt (__git_ps1) configuration
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
-GIT_PS1_SHOWUPSTREAM="auto"
+#GIT_PS1_SHOWUPSTREAM="auto name verbose git"
 
 # how long the working path dir (\w) should be
 PROMPT_DIRTRIM=0
