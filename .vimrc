@@ -31,7 +31,7 @@ set tabstop=4       " number of spaces inserted
 set shiftwidth=4    " number of spaces for indentation
 " more: http://vim.wikia.com/wiki/Converting_tabs_to_spaces
 
-set textwidth=79
+"set textwidth=79
 set nu          " show line numbers
 "set relativenumber
 "colors delek    " colorscheme
