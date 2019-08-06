@@ -164,6 +164,8 @@ if command -v perl5.18 > /dev/null 2>&1; then   # do we have perl5.18 binary?
 else
     runonce -i 10080 ... supi
 fi
+
+# Install my stuff but not always
 #runonce -i 10080 install_vim_stuff
 runonce -i 10080 ~/git/hub/runp/runp ~/git/hub/runp/commands/install-my-stuff.txt
 
