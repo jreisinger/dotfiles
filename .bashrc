@@ -118,9 +118,10 @@ fi
 # PROMPT (PS1) #
 ################
 
-# Terminal colors
-bldgrn='\e[1;32m'   # Green
-txtrst='\e[0m'      # Text Reset
+# Terminal colors. \[\] around colors are needed for mintty/cygwin.
+bldred='\[\e[31m\]'     # Red
+bldgrn='\[\e[1;32m\]'   # Green
+txtrst='\[\e[0m\]'      # Text Reset
 
 # Smiling prompt
 function _ps1_exit_code {
@@ -144,8 +145,7 @@ GIT_PS1_SHOWUNTRACKEDFILES=1
 # how long the working path dir (\w) should be
 PROMPT_DIRTRIM=2
 
-# \[\] around colors are needed for mintty/cygwin
-PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') \[${bldgrn}\]$ \[${txtrst}\]"
+PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') ${bldgrn}$ ${txtrst}"
 
 #########
 # Varia #
