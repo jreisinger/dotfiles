@@ -3,11 +3,16 @@
 # Synchronize current Git branch with the master branch.
 #
 
+# Uncomment to see debug output.
+#set -x
+
 CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
 
-set -x
-
-git checkout master
-git pull
-git checkout $CURRENT_BRANCH
-git merge master
+if [[ $CURRENT_BRANCH == "master" ]]; then
+    git pull
+else
+    git checkout master
+    git pull
+    git checkout $CURRENT_BRANCH
+    git merge master
+fi
