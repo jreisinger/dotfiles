@@ -57,6 +57,10 @@ alias j='jobs -l'
 if [ -e /usr/bin/vim ]; then
     alias vi='vim'
 fi
+if which kubectl > /dev/null 2>&1; then
+    alias kp='kubectl get pods'
+    alias kc='kubectl config get-contexts'
+fi
 
 ########
 # PATH #
