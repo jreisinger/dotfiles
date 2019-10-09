@@ -31,6 +31,11 @@ set tabstop=4       " number of spaces inserted
 set shiftwidth=4    " number of spaces for indentation
 " more: http://vim.wikia.com/wiki/Converting_tabs_to_spaces
 
+" Stop vim from messing up my indentation on comments
+" https://unix.stackexchange.com/questions/106526/stop-vim-from-messing-up-my-indentation-on-comments
+set cinkeys-=0#
+set indentkeys-=0#
+
 "set textwidth=79
 set nu          " show line numbers
 "set relativenumber
@@ -131,10 +136,3 @@ nnoremap <leader>l :PerlLint<CR>
 set makeprg=perl\ -c\ -MVi::QuickFix\ %
 set errorformat+=%m\ at\ %f\ line\ %l\.
 set errorformat+=%m\ at\ %f\ line\ %l
-
-"====[ Stop vim from messing up my indentation on comments ] ==================
-set nosmartindent
-set cindent
-set cinkeys-=0#
-set indentkeys-=0#
-autocmd FileType * set cindent "some file types override it
