@@ -184,3 +184,13 @@ runonce -i 10080 ~/git/hub/runp/runp ~/git/hub/runp/commands/install-my-stuff.tx
 runonce myquote -s
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Open my workshop (vim version)
+function workv () {
+    local proj=$(find -L \
+        ~/github ~/gitlab ~/go/src/github.com/jreisinger \
+        -maxdepth 1 -type d | peco)
+    cd $proj
+    git-sync
+    vim
+}
