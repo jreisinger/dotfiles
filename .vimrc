@@ -73,6 +73,10 @@ vnoremap <F9> zf
 autocmd BufWinLeave *.* mkview          "save folds
 autocmd BufWinEnter *.* silent loadview "load folds
 
+" where to store swap files (*.swp)
+" (https://stackoverflow.com/questions/1636297/how-to-change-the-folder-path-for-swp-files-in-vim)
+:set directory=$HOME/.vim//
+
 "====[ Toggle visibility of naughty characters ]==============================
 
 " Make naughty characters visible...
