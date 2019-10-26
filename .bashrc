@@ -186,11 +186,10 @@ runonce myquote -s
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Open my workshop (vim version)
-function workv () {
+function work () {
     local proj=$(find -L \
         ~/github ~/gitlab ~/go/src/github.com/jreisinger \
         -maxdepth 1 -type d | peco)
     cd $proj
     git-sync
-    vim
 }
