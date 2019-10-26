@@ -31,6 +31,18 @@ set tabstop=4       " number of spaces inserted
 set shiftwidth=4    " number of spaces for indentation
 " more: http://vim.wikia.com/wiki/Converting_tabs_to_spaces
 
+" Space settings per language
+" (https://github.com/zdr1976/dotfiles/blob/master/vim/vimrc#L170)
+autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+"autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
+autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType json setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType html,htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd BufNewFile,BufRead *.kubeconfig setlocal filetype=yaml
+autocmd FileType c,go,python autocmd BufWritePre <buffer> :%s/\s\+$//e
+
 " Stop vim from messing up my indentation on comments
 " https://unix.stackexchange.com/questions/106526/stop-vim-from-messing-up-my-indentation-on-comments
 set cinkeys-=0#
