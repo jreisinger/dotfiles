@@ -1,6 +1,6 @@
 My Linux/Unix workshop configuration and tools (see `bin` directory).
 
-To use it install dot files [manager](https://github.com/ingydotnet/...)
+To use it install dot files manager [...](https://github.com/ingydotnet/...)
 
     cd
     git clone git://github.com/ingydotnet/....git
@@ -9,4 +9,4 @@ To use it install dot files [manager](https://github.com/ingydotnet/...)
     .../... update
     .../... install
 
-... or just copy the dot files.
+... or just copy the dot files and the `bin` directory.
