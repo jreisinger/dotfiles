@@ -58,6 +58,7 @@ if [ -e /usr/bin/vim ]; then
     alias vi='vim'
 fi
 if which kubectl > /dev/null 2>&1; then
+    alias k='kubectl'
     alias kc='kubectl config get-contexts'
     alias ka='kubectl get all'
     alias ki='kubectl get ingresses'
