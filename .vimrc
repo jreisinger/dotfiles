@@ -16,14 +16,12 @@ nnoremap <F5> :BufExplorer<CR>
 " make templates work
 autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
 
-"====[ Basics ]===============================================================
+"====[ Basics ]================================================================
 
 syntax on                       " syntax highlighting
 filetype on                     " try to detect filetypes
 filetype plugin indent on       " enable loading indent file for filetype
 filetype plugin on              " enable templates
-
-set smartcase " be smart when searching
 
 " Spaces instead of tabs (looks the same in all editors) ...
 set expandtab       " insert space(s) when tab key is pressed
@@ -77,7 +75,18 @@ autocmd BufWinEnter *.* silent loadview "load folds
 " (https://stackoverflow.com/questions/1636297/how-to-change-the-folder-path-for-swp-files-in-vim)
 :set directory=$HOME/.vim//
 
-"====[ Toggle visibility of naughty characters ]==============================
+"====[ Search ]================================================================
+
+set ignorecase  " case-insensitive search
+set smartcase   " overide ignorecase when search includes uppercase letters
+
+" Use arrow keys to navigate after a :vimgrep or :helpgrep
+nmap <silent> <RIGHT>         :cnext<CR>
+nmap <silent> <RIGHT><RIGHT>  :cnfile<CR><C-G>
+nmap <silent> <LEFT>          :cprev<CR>
+nmap <silent> <LEFT><LEFT>    :cpfile<CR><C-G>
+
+"====[ Toggle visibility of naughty characters ]===============================
 
 " Make naughty characters visible...
 " (uBB is right double angle, uB7 is middle dot)
