@@ -17,6 +17,8 @@ calc [options] <expression>
 -x  convert expression (or its result) to hexadecimal
 -c  convert expression (or its result) to character
 
+calc '300 000 000 / (24 * 3600)'
+calc '300,000,000 / (24 * 3600)'
 calc 2**5 + 2x5    # x is the same as * (multiplication)
 calc -b 2^8        # ^ is the same as ** (exponentiation)
 calc -x 256
