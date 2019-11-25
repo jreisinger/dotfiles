@@ -8,11 +8,19 @@
 
 CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
 
+run_cmd() {
+    cmd=$1
+    echo "--> $cmd"
+    $cmd
+}
+
 if [[ $CURRENT_BRANCH == "master" ]]; then
-    git pull
+    run_cmd 'git pull'
+    run_cmd 'git push'
 else
-    git checkout master
-    git pull
-    git checkout $CURRENT_BRANCH
-    git merge master
+    run_cmd 'git checkout master'
+    run_cmd 'git pull'
+    run_cmd "git checkout $CURRENT_BRANCH"
+    run_cmd "git merge master"
+    run_cmd 'git push'
 fi
