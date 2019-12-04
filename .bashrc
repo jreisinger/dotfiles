@@ -71,17 +71,7 @@ fi
 # PATH #
 ########
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# add aws to PATH
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# add to PATH dir where go binary is installed
+# add to PATH the dir where go binary is installed
 if [ -d /usr/local/go/bin ]; then
     PATH="/usr/local/go/bin:$PATH"
 fi
@@ -89,8 +79,18 @@ fi
 # add go's bin to PATH
 if [ -d "$HOME/go/bin" ]; then
     PATH="$HOME/go/bin:$PATH"
+    #PATH=$PATH:$(go env GOPATH)/bin
 fi
-#export PATH=$PATH:$(go env GOPATH)/bin
+
+# add aws to PATH
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
 
 # dedup PATH
 PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
