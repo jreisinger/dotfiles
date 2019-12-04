@@ -8,12 +8,16 @@
 # History #
 ###########
 
-export HISTSIZE=9999
-export HISTFILESIZE=9999
-# not useful and probably doesn't allow removing duplicates
-#export HISTTIMEFORMAT="%d.%m.%y %T "
+export HISTSIZE=99999
+export HISTFILESIZE=99999
 # don't store duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignorespace:ignoredups:erasedups
+
+# Search history with peco
+function h() {
+    local cmd=$(history | tac | cut -c 8- | peco)
+    $cmd
+}
 
 ########
 # Perl #
@@ -52,7 +56,6 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 # other aliases
-alias h='history'
 alias j='jobs -l'
 if [ -e /usr/bin/vim ]; then
     alias vi='vim'
