@@ -15,7 +15,9 @@ export HISTCONTROL=ignorespace:ignoredups:erasedups
 
 # Search history with peco
 function h() {
-    local cmd=$(history | tac | cut -c 8- | peco)
+    # awk removes duplicate lines (even not adjacent) and keeps the original order
+    local cmd=$(history | tac | cut -c 8- | awk '!seen[$0]++' | peco)
+    history -s "$cmd" # add $cmd to history
     $cmd
 }
 
