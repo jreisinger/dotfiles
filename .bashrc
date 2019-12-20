@@ -13,12 +13,22 @@ export HISTFILESIZE=99999
 # don't store duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 
-# Search history with peco
+# Search history with peco. Don't run cmmand from h just store it into history.
 function h() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+
     # awk removes duplicate lines (even not adjacent) and keeps the original order
     local cmd=$(history | tac | cut -c 8- | awk '!seen[$0]++' | peco)
+
     history -s "$cmd" # add $cmd to history
-    $cmd
+
+    #echo $cmd
+    #$cmd
 }
 
 ########
