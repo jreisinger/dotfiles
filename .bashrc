@@ -162,8 +162,12 @@ PROMPT_DIRTRIM=3
 
 # K8s context in PS1. My alternative to https://github.com/jonmosco/kube-ps1.
 function _k8s_context {
-    local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
-    echo $CTX
+    if [[ -f $HOME/.kube/config ]]; then
+        local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
+        echo $CTX
+    else
+        echo -e '\b' # remove char (whitespace)
+    fi
 }
 
 PS1="\$(_ps1_exit_code) \h \w \j\$(__git_ps1 ' (%s)') \$(_k8s_context) ${bldgrn}$ ${txtrst}"
