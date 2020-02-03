@@ -164,7 +164,7 @@ PROMPT_DIRTRIM=3
 function _k8s_context {
     if [[ -f $HOME/.kube/config ]]; then
         local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
-        echo $CTX
+        echo $CTX | perl -wpe 's/"/[/' | perl -wpe 's/"/]/'
     else
         echo -e '\b' # remove char (whitespace)
     fi
