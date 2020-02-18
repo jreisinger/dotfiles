@@ -1,16 +1,25 @@
 #!/usr/bin/env perl
 #
-# Script that commits git changes with a nice message. It gets called from an
-# alias within ~/.gitconfig
+# Script that adds and commits modifications in git tracked files with a nice
+# message. It gets called from an alias within ~/.gitconfig.
 #
+use strict;
+use warnings;
 
 my @files;
+
 for (`git status --porcelain`) {
-    push @files, (split)[1];
+    my $status   = (split)[0];
+    my $filename = (split)[1];
+    next if $status ne 'M';    # only modified files (man git-status)
+    push @files, $filename;
 }
 
-my $word = @files > 1 ? "files" : "file";
+if ( not @files ) {
+    print("--> No modified files ...\n");
+    exit;
+}
 
-my $cmd = "git commit -am 'update $word " . join(", ", @files) . "'";
-#print("[$cmd]");
-system $cmd;
+my $cmd = "git commit -am 'modify " . join( ", ", @files ) . "'";
+print("--> Going to exec '$cmd'\n");
+exec $cmd;
