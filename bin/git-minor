@@ -20,6 +20,6 @@ if ( not @files ) {
     exit;
 }
 
-my $cmd = "git commit -am 'modify " . join( ", ", @files ) . "'";
+my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
 print("--> Going to exec '$cmd'\n");
 exec $cmd;
