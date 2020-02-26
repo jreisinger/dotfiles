@@ -15,11 +15,8 @@ for (`git status --porcelain`) {
     push @files, $filename;
 }
 
-if ( not @files ) {
-    print("--> No modified files ...\n");
-    exit;
+if (@files) {
+    my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
+    print("--> $cmd\n");
+    exec $cmd;
 }
-
-my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
-print("--> Going to exec '$cmd'\n");
-exec $cmd;
