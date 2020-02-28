@@ -188,14 +188,14 @@ fi
 
 # Upgrade my dotfiles but not always
 if command -v perl5.18 > /dev/null 2>&1; then   # do we have perl5.18 binary?
-    runonce -i 10080 perl5.18 ~/.../... supi    # fix for Mac
+    runonce -i 20160 perl5.18 ~/.../... supi    # fix for Mac
 else
-    runonce -i 10080 ... supi
+    runonce -i 20160 ... supi
 fi
 
 # Install my stuff but not always
-#runonce -i 10080 install_vim_stuff
-runonce -i 10080 ~/bin/runp ~/git/hub/runp/commands/install-my-stuff.txt
+#runonce -i 20160 install_vim_stuff
+runonce -i 20160 ~/bin/runp ~/git/hub/runp/commands/install-my-stuff.txt
 
 # Print quote but not always
 runonce myquote -s
