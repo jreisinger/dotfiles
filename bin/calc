@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 # Command line options...
-our ($h, $b, $x, $c);
+our ($h, $b, $x, $c, $l);
 
 # Help message...
 if ($h) {
@@ -16,6 +16,7 @@ calc [options] <expression>
 -b  convert expression (or its result) to binary
 -x  convert expression (or its result) to hexadecimal
 -c  convert expression (or its result) to character
+-l  calculate base 2 logarithm of expression
 
 calc '300 000 000 / (24 * 3600)'
 calc '300,000,000 / (24 * 3600)'
@@ -52,6 +53,9 @@ if ($b) {
     # Show result as character...
     binmode(STDOUT, ':utf8');
     printf "%s = %c\n", $expr, $res;
+} elsif ($l) {
+    # Calculate base 2 logarithm...
+    printf "log %s = %s\n", $expr, log($expr)/log(2);
 } else {
     # Show thousands in result but not in the decimal part...
     my ( $before_dot, $after_dot ) = split /\./, $res;
