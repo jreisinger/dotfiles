@@ -133,7 +133,9 @@ fi
 # PROMPT (PS1) #
 ################
 
-# Terminal colors. \[\] around colors are needed for mintty/cygwin.
+# Terminal colors. \[\] around colors (non printable bytes in general) are
+# needed so bash can count prompt (PS1) length correctly. Otherwise you get
+# rewritten text.
 bldred='\[\e[31m\]'     # Red
 bldgrn='\[\e[1;32m\]'   # Green
 txtrst='\[\e[0m\]'      # Text Reset
@@ -164,13 +166,11 @@ PROMPT_DIRTRIM=3
 function _k8s_context {
     if [[ -f $HOME/.kube/config ]]; then
         local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
-        echo $CTX | perl -wpe 's/"/[/' | perl -wpe 's/"/]/'
-    else
-        echo -e '\b' # remove char (whitespace)
+        echo $CTX | perl -wpe 's/"/ [/' | perl -wpe 's/"/]/'
     fi
 }
 
-PS1="\$(_ps1_exit_code) \h \w\$(__git_ps1 ' (%s)') \$(_k8s_context) ${bldgrn}$ ${txtrst}"
+PS1="\$(_ps1_exit_code) \h \w\$(__git_ps1 ' (%s)')\$(_k8s_context) ${bldgrn}$ ${txtrst}"
 
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
 PROMPT_COMMAND='echo -ne "\033]0;$(basename $PWD)\007"'
