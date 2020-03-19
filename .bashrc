@@ -138,13 +138,14 @@ fi
 # rewritten text.
 bldred='\[\e[31m\]'     # Red
 bldgrn='\[\e[1;32m\]'   # Green
+bldblu='\[\e[1;34m\]'   # Green
 txtrst='\[\e[0m\]'      # Text Reset
 
 # Smiling prompt
 function _ps1_exit_code {
     local EXIT="$?"
-    local msg='(-:'
-    [[ $EXIT -ne 0 ]] && msg=')-:'
+    local msg=':)'
+    [[ $EXIT -ne 0 ]] && msg=':('
     echo $msg
 }
 
@@ -170,7 +171,7 @@ function _k8s_context {
     fi
 }
 
-PS1="\$(_ps1_exit_code)\h\w\$(__git_ps1 '(%s)')\$(_k8s_context)${bldgrn}>${txtrst}"
+PS1="\$(_ps1_exit_code)${bldblu}\h${txtrst}\w\$(__git_ps1 '(%s)')\$(_k8s_context)${bldgrn}>${txtrst}"
 
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
 PROMPT_COMMAND='echo -ne "\033]0;$(basename $PWD)\007"'
