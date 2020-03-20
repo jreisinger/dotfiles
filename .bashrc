@@ -174,7 +174,7 @@ function _k8s_context {
 PS1="\$(_ps1_exit_code)${bldblu}\h${txtrst}\w\$(__git_ps1 '(%s)')\$(_k8s_context)${bldgrn}>${txtrst}"
 
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
-PROMPT_COMMAND='echo -ne "\033]0;$(basename $PWD)\007"'
+PROMPT_COMMAND='echo -ne "\033]0;$(hostname):$(basename $PWD)\007"'
 
 #########
 # Varia #
