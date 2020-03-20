@@ -138,7 +138,7 @@ fi
 # rewritten text.
 bldred='\[\e[31m\]'     # Red
 bldgrn='\[\e[1;32m\]'   # Green
-bldblu='\[\e[1;34m\]'   # Green
+bldblu='\[\e[1;34m\]'   # Blue
 txtrst='\[\e[0m\]'      # Text Reset
 
 # Smiling prompt
