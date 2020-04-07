@@ -171,9 +171,10 @@ function _k8s_context {
     fi
 }
 
-PS1="\$(_ps1_exit_code)${bldblu}\h${txtrst}\w\$(__git_ps1 '(%s)')\$(_k8s_context)\j${bldgrn}>${txtrst}"
+PS1="\$(_ps1_exit_code) ${bldblu}\h${txtrst} \w\$(__git_ps1 '(%s)') \$(_k8s_context) \j\n${bldgrn}> ${txtrst}"
 
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
+# PROMPT_COMMAND is evaluated before bash displays the prompt.
 PROMPT_COMMAND='echo -ne "\033]0;$(hostname):$(basename $PWD)\007"'
 
 #########
