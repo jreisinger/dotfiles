@@ -17,6 +17,6 @@ for (`git status --porcelain`) {
 
 if (@files) {
     my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
-    print("--> $cmd\n");
+    print(">> $cmd\n");
     exec $cmd;
 }
