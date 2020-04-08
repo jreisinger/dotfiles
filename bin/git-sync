@@ -4,10 +4,10 @@
 #
 
 # Colors for terminal.
-bldred='\e[31m'
-bldgrn='\e[1;32m'
-bldblu='\e[1;34m'
-txtrst='\e[0m'
+bldred='\033[31m'
+bldgrn='\033[1;32m'
+bldblu='\033[1;34m'
+txtrst='\033[0m'
 
 # Check we are in a git repository.
 if ! git status > /dev/null 2>&1; then
