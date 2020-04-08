@@ -21,7 +21,7 @@
         l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
         ll = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --name-status
         #minor = commit -a -m 'minor change'
-        minor = "! git-minor"
+        #minor = "! git-minor"
 [push]
         default = matching
 [url "git@github.com:jreisinger/"]
