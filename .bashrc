@@ -202,12 +202,10 @@ runonce -i 20160 ~/bin/runp ~/git/hub/runp/commands/install-my-stuff.txt
 # Print quote but not always
 runonce myquote -s
 
-#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# Open my workshop (vim version)
+# Open my workshop
 function work () {
     local proj=$(find -L \
-        ~/github ~/gitlab ~/go/src/github.com/jreisinger \
+        ~/github ~/gitlab \
         -maxdepth 1 -type d | peco)
     cd $proj
     git-sync
