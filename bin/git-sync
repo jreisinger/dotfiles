@@ -3,14 +3,23 @@
 # Synchronize current Git branch with the master branch.
 #
 
-# Uncomment to see debug output.
-#set -x
+# Colors for terminal.
+bldred='\e[31m'
+bldgrn='\e[1;32m'
+bldblu='\e[1;34m'
+txtrst='\e[0m'
+
+# Check we are in a git repository.
+if ! git status > /dev/null 2>&1; then
+    echo -e "${bldred}>>${txtrst} Not a git repository, exiting ..."
+    exit 1
+fi
 
 CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
 
 run_cmd() {
     cmd=$1
-    echo "--> $cmd"
+    echo -e "${bldgrn}>>${txtrst} $cmd"
     $cmd
 }
 
