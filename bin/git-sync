@@ -23,14 +23,16 @@ run_cmd() {
     $cmd
 }
 
+run_cmd 'git branch'
+
 if [[ $CURRENT_BRANCH == "master" ]]; then
     run_cmd 'git pull'
     run_cmd 'git push'
 else
+    run_cmd 'git pull'
     run_cmd 'git checkout master'
     run_cmd 'git pull'
     run_cmd "git checkout $CURRENT_BRANCH"
-    run_cmd 'git pull'
     run_cmd 'git merge master'
     run_cmd 'git push'
 fi
