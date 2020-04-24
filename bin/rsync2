@@ -12,6 +12,7 @@ flock $self, LOCK_EX | LOCK_NB or die "This script ($0) is already running\n";
 die "Usage: $0 joe example.com 22 /data /backup/joe/\n" unless @ARGV == 5;
 my ( $login, $host, $port, $src, $dst ) = @ARGV;
 
-my $cmd = "rsync -q --copy-links --delete -a -zz --no-perms --no-owner --no-group -e 'ssh -p $port -l $login' $src $host:$dst";
+# 'ssh -o StrictHostKeyChecking=no' is used so rsync doesn't require confirmation on the first run
+my $cmd = "rsync -e 'ssh -o StrictHostKeyChecking=no' -q --copy-links --delete -a -zz --no-perms --no-owner --no-group -e 'ssh -p $port -l $login' $src $host:$dst";
 
 system($cmd) == 0 or die "system($cmd) failed: $?\n";
