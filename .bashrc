@@ -151,10 +151,11 @@ function __prompt_command {
     # needed so bash can count prompt (PS1) length correctly. Otherwise you get
     # rewritten text.
     local red='\[\033[31m\]'
-    local bldred='\[\e[31m\]'
     local grn='\[\033[32m\]'
-    local bldgrn='\[\e[1;32m\]'
     local blu='\[\e[0;34m\]'
+    local ylw='\[\e[0;33m\]'
+    local bldred='\[\e[31m\]'
+    local bldgrn='\[\e[1;32m\]'
     local bldblu='\[\e[1;34m\]'
     local txtrst='\[\e[0m\]'
 
@@ -173,9 +174,10 @@ function __prompt_command {
 
     PS1="${blu}\h${txtrst} \w\$(__git_ps1 '(%s)')"
 
+    # Add color when in context where a bit of caution is appropriate
     local k8s_context=$(__k8s_context)
     if [[ $k8s_context =~ (.*)(prod|admin)(.*) ]]; then
-        PS1+=" ${BASH_REMATCH[1]}${red}${BASH_REMATCH[2]}${txtrst}${BASH_REMATCH[3]}"
+        PS1+=" ${BASH_REMATCH[1]}${ylw}${BASH_REMATCH[2]}${txtrst}${BASH_REMATCH[3]}"
     else
         PS1+=" $k8s_context"
     fi
@@ -183,11 +185,11 @@ function __prompt_command {
     # Set terminal tab title
     echo -ne "\033]0;$(hostname):$(basename $PWD)\007"
 
+    # Set color based on the command's exit code
     if [[ $EXIT -eq 0 ]]; then
         PS1+="${bldgrn} > ${txtrst}"
     else
         PS1+="${bldred} > ${txtrst}"
-
     fi
 }
 
