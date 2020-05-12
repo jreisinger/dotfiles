@@ -133,52 +133,67 @@ fi
 # PROMPT (PS1) #
 ################
 
-# Terminal colors. \[\] around colors (non printable bytes in general) are
-# needed so bash can count prompt (PS1) length correctly. Otherwise you get
-# rewritten text.
-bldred='\[\e[31m\]'
-bldgrn='\[\e[1;32m\]'
-bldblu='\[\e[1;34m\]'
-blu='\[\e[0;34m\]'
-txtrst='\[\e[0m\]'
-
-# Smiling prompt
-function _ps1_exit_code {
-    local EXIT="$?"
-    local msg=':)'
-    [[ $EXIT -ne 0 ]] && msg=':('
-    echo $msg
-}
-
-# Download and source git prompt
-if [ ! -f ~/.git-prompt-$(_get_git_version).sh ]; then
-    curl --silent https://raw.githubusercontent.com/git/git/v$(_get_git_version)/contrib/completion/git-prompt.sh --output ~/.git-prompt-$(_get_git_version).sh
-fi
-source ~/.git-prompt-$(_get_git_version).sh
-
-# git prompt (__git_ps1) configuration
-GIT_PS1_SHOWDIRTYSTATE=1
-GIT_PS1_SHOWUNTRACKEDFILES=1
-#GIT_PS1_SHOWUPSTREAM="auto name verbose git"
-
-# how long the working path dir (\w) should be
-PROMPT_DIRTRIM=3
-
 # K8s context in PS1. My alternative to https://github.com/jonmosco/kube-ps1.
-function _k8s_context {
+function __k8s_context {
     if [[ -f $HOME/.kube/config ]]; then
         local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
         echo $CTX | sed 's/"//g'
     else
-        echo -e "\b \b"
+        echo -e "\b \b" # print nothing
     fi
 }
 
-PS1="\$(_ps1_exit_code) ${bldblu}\h${txtrst} \w\$(__git_ps1 '(%s)') ${blu}\$(_k8s_context)${txtrst}${bldgrn} > ${txtrst}"
+function __prompt_command {
+    # This needs to be first
+    local EXIT="$?"
 
-# https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
-# PROMPT_COMMAND is evaluated before bash displays the prompt.
-PROMPT_COMMAND='echo -ne "\033]0;$(hostname):$(basename $PWD)\007"'
+    # Terminal colors. \[\] around colors (non printable bytes in general) are
+    # needed so bash can count prompt (PS1) length correctly. Otherwise you get
+    # rewritten text.
+    local red='\[\033[31m\]'
+    local bldred='\[\e[31m\]'
+    local grn='\[\033[32m\]'
+    local bldgrn='\[\e[1;32m\]'
+    local blu='\[\e[0;34m\]'
+    local bldblu='\[\e[1;34m\]'
+    local txtrst='\[\e[0m\]'
+
+    # Download and source git prompt
+    if [ ! -f ~/.git-prompt-$(_get_git_version).sh ]; then
+        curl --silent https://raw.githubusercontent.com/git/git/v$(_get_git_version)/contrib/completion/git-prompt.sh --output ~/.git-prompt-$(_get_git_version).sh
+    fi
+    source ~/.git-prompt-$(_get_git_version).sh
+
+    # git prompt (__git_ps1) configuration
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWUNTRACKEDFILES=1
+
+    # how long the working path dir (\w) should be
+    PROMPT_DIRTRIM=3
+
+    PS1="${blu}\h${txtrst} \w\$(__git_ps1 '(%s)')"
+
+    local k8s_context=$(__k8s_context)
+    if [[ $k8s_context =~ (.*)(prod|admin)(.*) ]]; then
+        PS1+=" ${BASH_REMATCH[1]}${red}${BASH_REMATCH[2]}${txtrst}${BASH_REMATCH[3]}"
+    else
+        PS1+=" $k8s_context"
+    fi
+
+    # Set terminal tab title
+    echo -ne "\033]0;$(hostname):$(basename $PWD)\007"
+
+    if [[ $EXIT -eq 0 ]]; then
+        PS1+="${bldgrn} > ${txtrst}"
+    else
+        PS1+="${bldred} > ${txtrst}"
+
+    fi
+}
+
+# Function that runs after each command to generate the prompt. Adapted from
+# https://stackoverflow.com/questions/16715103/bash-prompt-with-last-exit-code
+PROMPT_COMMAND=__prompt_command
 
 #########
 # Varia #
