@@ -136,10 +136,11 @@ fi
 # Terminal colors. \[\] around colors (non printable bytes in general) are
 # needed so bash can count prompt (PS1) length correctly. Otherwise you get
 # rewritten text.
-bldred='\[\e[31m\]'     # Red
-bldgrn='\[\e[1;32m\]'   # Green
-bldblu='\[\e[1;34m\]'   # Blue
-txtrst='\[\e[0m\]'      # Text Reset
+bldred='\[\e[31m\]'
+bldgrn='\[\e[1;32m\]'
+bldblu='\[\e[1;34m\]'
+blu='\[\e[0;34m\]'
+txtrst='\[\e[0m\]'
 
 # Smiling prompt
 function _ps1_exit_code {
@@ -167,11 +168,13 @@ PROMPT_DIRTRIM=3
 function _k8s_context {
     if [[ -f $HOME/.kube/config ]]; then
         local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
-        echo $CTX | perl -wpe 's/"/[/' | perl -wpe 's/"/]/'
+        echo $CTX | sed 's/"//g'
+    else
+        echo -e "\b \b"
     fi
 }
 
-PS1="\$(_ps1_exit_code)${bldblu}\h${txtrst}\w\$(__git_ps1 '(%s)')\$(_k8s_context){\j}${bldgrn} > ${txtrst}"
+PS1="\$(_ps1_exit_code) ${bldblu}\h${txtrst} \w\$(__git_ps1 '(%s)') ${blu}\$(_k8s_context)${txtrst}${bldgrn} > ${txtrst}"
 
 # https://stackoverflow.com/questions/10517128/change-gnome-terminal-title-to-reflect-the-current-directory
 # PROMPT_COMMAND is evaluated before bash displays the prompt.
