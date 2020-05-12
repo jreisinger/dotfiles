@@ -136,8 +136,8 @@ fi
 # K8s context in PS1. My alternative to https://github.com/jonmosco/kube-ps1.
 function __k8s_context {
     if [[ -f $HOME/.kube/config ]]; then
-        local CTX=$(kubectl config view --minify --output json | jq '.contexts[] | .name')
-        echo $CTX | sed 's/"//g'
+        CTX=$(kubectl config view --minify --output json | jq -r '.["current-context"]')
+        echo $CTX
     else
         echo -e "\b \b" # print nothing
     fi
