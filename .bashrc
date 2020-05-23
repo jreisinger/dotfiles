@@ -133,23 +133,23 @@ fi
 # PROMPT (PS1) #
 ################
 
+# NOTE: \[\] around colors and other non printable bytes are needed so bash can
+# count prompt (PS1) length correctly. Otherwise you get rewritten text.
+
 # K8s context in PS1. My alternative to https://github.com/jonmosco/kube-ps1.
 function __k8s_context {
+    local ctx=""
     if [[ -f $HOME/.kube/config ]]; then
-        CTX=$(kubectl config view --minify --output json | jq -r '.["current-context"]')
-        echo $CTX
-    else
-        echo -e "\b \b" # print nothing
+        ctx=$(kubectl config view --minify --output json 2> /dev/null | jq -r '.["current-context"]')
     fi
+    echo "[$ctx]"
 }
 
 function __prompt_command {
     # This needs to be first
     local EXIT="$?"
 
-    # Terminal colors. \[\] around colors (non printable bytes in general) are
-    # needed so bash can count prompt (PS1) length correctly. Otherwise you get
-    # rewritten text.
+    # Terminal colors
     local red='\[\033[31m\]'
     local grn='\[\033[32m\]'
     local blu='\[\e[0;34m\]'
