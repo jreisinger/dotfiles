@@ -217,7 +217,7 @@ fi
 
 # Install my stuff but not always
 #runonce -i 20160 install_vim_stuff
-runonce -i 20160 ~/bin/runp ~/git/hub/runp/commands/install-my-stuff.txt
+runonce -i 20160 runp ~/git/hub/runp/commands/install-my-stuff.txt
 
 # Print quote but not always
 runonce myquote -s
