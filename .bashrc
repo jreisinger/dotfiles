@@ -158,6 +158,8 @@ function __prompt_command {
     local bldgrn='\[\e[1;32m\]'
     local bldblu='\[\e[1;34m\]'
     local txtrst='\[\e[0m\]'
+    # Background colors - https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal
+    local bcgblu='\[\e[48;5;123m\]'
 
     # Download and source git prompt
     if [ ! -f ~/.git-prompt-$(_get_git_version).sh ]; then
@@ -172,7 +174,7 @@ function __prompt_command {
     # how long the working path dir (\w) should be
     PROMPT_DIRTRIM=3
 
-    PS1="${blu}\h${txtrst} \w\$(__git_ps1 '(%s)')"
+    PS1="${blu}\h${txtrst} ${bcgblu}\w\$(__git_ps1 '(%s)')${txtrst}"
 
     # Add color when in context where a bit of caution is appropriate
     local k8s_context=$(__k8s_context)
