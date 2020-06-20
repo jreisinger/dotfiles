@@ -2,9 +2,11 @@
 set -e # exit on error
 
 REPO_PREFIX=github.com/jreisinger
+
 MOD="$1"
 PKG="pkg"
 
+# Help.
 if [ -z $MOD ]; then
     cat << EOF
 $0 creates typical Go code directories and files. Based on
@@ -21,7 +23,6 @@ fi
 # Create repository. Repository typically contains only one module.
 REPO="$MOD"
 mkdir $REPO
-
 cd $REPO
 go mod init $REPO_PREFIX/$MOD
 
@@ -62,9 +63,9 @@ func TestFunc(t *testing.T) {
 		}
 	}
 }
-
 EOF
 
+# Create the main executable command.
 cat << EOF > main.go
 package main
 
@@ -120,5 +121,3 @@ COPY --from=build /app/$MOD /bin/$MOD
 
 ENTRYPOINT ["/bin/$MOD"]
 EOF
-
-#docker build . -t $MOD
