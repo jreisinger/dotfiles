@@ -35,34 +35,48 @@ import (
 	"fmt"
 )
 
-func Func() {
-	fmt.Printf("Hello from function Func of package $PKG\n")
+func Func(name string) string {
+	return fmt.Sprintf("Hello from Func of $PKG, %s", name)
 }
 EOF
 
-# Create another package source file.
-cat << EOF > $PKG/src-file2.go
+# Create package source test file.
+cat << EOF > $PKG/src-file1_test.go
 package $PKG
 
 import (
-	"fmt"
+	"testing"
 )
 
-func Func2() {
-	fmt.Printf("Hello from function Func2 of package $PKG\n")
+func TestFunc(t *testing.T) {
+	cases := []struct {
+		in, want string
+	}{
+		{"Dude", "Hello from Func of $PKG, Dude"},
+		{"", "Hello from Func of $PKG, "},
+	}
+	for _, c := range cases {
+		got := Func(c.in)
+		if got != c.want {
+			t.Errorf("Func(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
 }
+
 EOF
 
 cat << EOF > main.go
 package main
 
 import (
+	"fmt"
+
     "$REPO_PREFIX/$MOD/$PKG"
 )
 
 func main() {
-   $PKG.Func()
-   $PKG.Func2()
+   out := $PKG.Func("Dude")
+   fmt.Println(out)
 }
 EOF
 
