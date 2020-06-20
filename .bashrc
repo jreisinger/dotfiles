@@ -159,7 +159,7 @@ function __prompt_command {
     local bldblu='\[\e[1;34m\]'
     local txtrst='\[\e[0m\]'
     # Background colors - https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal
-    local bcgblu='\[\e[48;5;123m\]'
+    local bcgblu='\[\e[48;5;195m\]'
 
     # Download and source git prompt
     if [ ! -f ~/.git-prompt-$(_get_git_version).sh ]; then
@@ -189,9 +189,9 @@ function __prompt_command {
 
     # Set color based on the command's exit code
     if [[ $EXIT -eq 0 ]]; then
-        PS1+="${bldgrn} > ${txtrst}"
+        PS1+="${bldgrn} $ ${txtrst}"
     else
-        PS1+="${bldred} > ${txtrst}"
+        PS1+="${bldred} $ ${txtrst}"
     fi
 }
 
