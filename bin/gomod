@@ -1,0 +1,110 @@
+#!/bin/bash
+set -e # exit on error
+
+REPO_PREFIX=github.com/jreisinger
+MOD="$1"
+PKG="pkg"
+
+if [ -z $MOD ]; then
+    cat << EOF
+$0 creates typical Go code directories and files. Based on
+https://golang.org/doc/code.html. Usage:
+
+$0 <module>
+cd <module>
+make run
+docker build . -t <module>
+EOF
+    exit 1
+fi
+
+# Create repository. Repository typically contains only one module.
+REPO="$MOD"
+mkdir $REPO
+
+cd $REPO
+go mod init $REPO_PREFIX/$MOD
+
+mkdir $PKG
+
+# Create package source file.
+cat << EOF > $PKG/src-file1.go
+package $PKG
+
+import (
+	"fmt"
+)
+
+func Func() {
+	fmt.Printf("Hello from function Func of package $PKG\n")
+}
+EOF
+
+# Create another package source file.
+cat << EOF > $PKG/src-file2.go
+package $PKG
+
+import (
+	"fmt"
+)
+
+func Func2() {
+	fmt.Printf("Hello from function Func2 of package $PKG\n")
+}
+EOF
+
+cat << EOF > main.go
+package main
+
+import (
+    "$REPO_PREFIX/$MOD/$PKG"
+)
+
+func main() {
+   $PKG.Func()
+   $PKG.Func2()
+}
+EOF
+
+# Create Makefile.
+cat << 'EOF' > Makefile
+test:
+	if [ ! -z "${SOME_VAR}" ]; then\
+		go clean -testcache ./...;\
+		go test ./... -tags manual;\
+	else\
+		go test ./...;\
+	fi
+
+build: test
+	CGO_ENABLED=0 go build
+EOF
+cat << EOF >> Makefile
+
+run: build
+	./$MOD
+EOF
+
+# Create Dockerfile.
+cat << EOF > Dockerfile
+FROM golang AS build
+
+# Set the current working directory inside container.
+WORKDIR /app
+
+# Download all dependencies.
+COPY go.* ./
+RUN go mod download
+
+# Build the app.
+COPY . ./
+RUN make build
+
+# Create a single layer image.
+FROM alpine:latest
+COPY --from=build /app/$MOD /bin/$MOD
+
+ENTRYPOINT ["/bin/$MOD"]
+EOF
+
+#docker build . -t $MOD
