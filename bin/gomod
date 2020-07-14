@@ -7,27 +7,25 @@ PKG="pkg"
 
 if [ -z $MOD ]; then
     cat << EOF
-$0 creates typical Go code directories and files. Based on
-https://golang.org/doc/code.html. Usage:
-
-$0 <module>
-cd <module>
-make run
-docker build . -t <module>
+gomod creates typical Go code directories and files. Based on
+https://golang.org/doc/code.html. Usage: gomod <module>
 EOF
     exit 1
 fi
 
-# Create repository. Repository typically contains only one module.
-REPO="$MOD"
-mkdir $REPO
+## Repository/module
 
+REPO="$MOD"
+echo "--> Create repository/module '$REPO' (repository typically contains only one module)"
+mkdir $REPO
 cd $REPO
 go mod init $REPO_PREFIX/$MOD
 
+## Package
+
 mkdir $PKG
 
-# Create package source file.
+echo "--> Create source file of package '$PKG'"
 cat << EOF > $PKG/src-file1.go
 package $PKG
 
@@ -40,7 +38,7 @@ func Func() {
 }
 EOF
 
-# Create another package source file.
+echo "--> Create another source file of package '$PKG'"
 cat << EOF > $PKG/src-file2.go
 package $PKG
 
@@ -52,6 +50,8 @@ func Func2() {
 	fmt.Printf("Hello from function Func2 of package $PKG\n")
 }
 EOF
+
+## Main
 
 cat << EOF > main.go
 package main
@@ -66,7 +66,9 @@ func main() {
 }
 EOF
 
-# Create Makefile.
+## Makefile
+
+echo "--> Create Makefile"
 cat << 'EOF' > Makefile
 test:
 	if [ ! -z "${SOME_VAR}" ]; then\
@@ -85,7 +87,9 @@ run: build
 	./$MOD
 EOF
 
-# Create Dockerfile.
+## Dockerfile
+
+echo "--> Create Dockerfile"
 cat << EOF > Dockerfile
 FROM golang AS build
 
@@ -107,4 +111,12 @@ COPY --from=build /app/$MOD /bin/$MOD
 ENTRYPOINT ["/bin/$MOD"]
 EOF
 
-#docker build . -t $MOD
+## Next steps
+
+echo "--> Let's disco"
+cat << EOF
+cd $MOD
+make run
+docker build . -t $MOD
+EOF
+
