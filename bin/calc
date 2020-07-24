@@ -1,6 +1,7 @@
 #!/usr/bin/perl -sT
 use strict;
 use warnings;
+use bignum;
 
 # Command line options...
 our ($h, $b, $x, $c, $l);
@@ -21,6 +22,7 @@ calc [options] <expression>
 calc '300 000 000 / (24 * 3600)'
 calc '300,000,000 / (24 * 3600)'
 calc 2**5 + 2x5    # x is the same as * (multiplication)
+calc V10           # V is the same as sqrt (square root)
 calc -b 2^8        # ^ is the same as ** (exponentiation)
 calc -x 256
 calc -c 2**17-3030
@@ -31,7 +33,7 @@ EOF
 }
 
 # Allowed input characters regex...
-my $allowed = qr'\d\+\-\/\*\.x';
+my $allowed = qr'\d\+\-\/\*\.x(sqrt)V';
 
 # Transform input a bit...
 @ARGV = ( "@ARGV" =~ /[$allowed]/g );   # un-taint
@@ -39,6 +41,8 @@ my $expr = "@ARGV";
 $expr =~ s/\s+//g;                      # allow whitespace in input
 $expr =~ s/x/*/gi;                      # allow x for multiplication
 $expr =~ s/\^/**/g;                     # allow ^ for exponentiation
+$expr =~ s/V/sqrt/g;                    # allow V for square root
+$expr =~ s/sqrt/sqrt /g;
 
 # Do the calculation...
 my $res = eval "$expr";
