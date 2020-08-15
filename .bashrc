@@ -232,3 +232,6 @@ function work () {
     cd $proj
     git-sync
 }
+
+# Stop saying that zsh is the new default on Mac
+export BASH_SILENCE_DEPRECATION_WARNING=1
