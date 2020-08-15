@@ -8,6 +8,7 @@
 # History #
 ###########
 
+export SHELL_SESSION_HISTORY=0 # so history gets saved on Mac
 export HISTSIZE=99999
 export HISTFILESIZE=99999
 # don't store duplicate lines or lines starting with space in the history
@@ -23,7 +24,7 @@ function h() {
     fi
 
     # awk removes duplicate lines (even not adjacent) and keeps the original order
-    local cmd=$(history | tac | cut -c 8- | awk '!seen[$0]++' | peco)
+    local cmd=$(history | $tac | cut -c 8- | awk '!seen[$0]++' | peco)
 
     history -s "$cmd" # add $cmd to history
 
