@@ -228,7 +228,7 @@ runonce myquote -s
 # Open my workshop
 function work () {
     local proj=$(find -L \
-        ~/github ~/gitlab \
+        ~/git/hub ~/git/lab \
         -maxdepth 1 -type d | peco)
     cd $proj
     git-sync
