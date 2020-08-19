@@ -237,5 +237,5 @@ function work () {
 # Stop saying that zsh is the new default on Mac
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# So Python can find CA certificates.
-export REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/pan-net.crt
+# So Python on Mac can find CA certificates.
+export REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/cacert.pem
