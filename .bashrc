@@ -234,8 +234,18 @@ function work () {
     git-sync
 }
 
-# Stop saying that zsh is the new default on Mac
-export BASH_SILENCE_DEPRECATION_WARNING=1
+###########
+# MacBook #
+###########
 
-# So Python on Mac can find CA certificates.
-export REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/cacert.pem
+machine=$(uname -s)
+if [[ $machine == "Darwin" ]]; then
+    # Stop saying that zsh is the new default.
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+
+    # So Python can find CA certificates.
+    ALL_CA_CERTIFICATES="/usr/local/share/ca-certificates/cacert.pem"
+    if [[ -f "$ALL_CA_CERTIFICATES" ]]; then
+        export REQUESTS_CA_BUNDLE=$ALL_CA_CERTIFICATES
+    fi
+fi
