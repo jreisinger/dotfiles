@@ -1,0 +1,12 @@
+{
+    "workbench.colorTheme": "Visual Studio Light",
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "workbench.startupEditor": "newUntitledFile",
+    "go.formatTool": "goimports",
+    "git.autofetch": true,
+    "window.zoomLevel": 0,
+    "python.pythonPath": "/usr/local/bin/python3",
+    "go.useLanguageServer": true,
+    "git.confirmSync": false,
+    "editor.rulers": [ 80, 120 ]
+}
