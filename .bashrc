@@ -122,12 +122,17 @@ if [ -e ~/.ssh_bash_completion ]; then
     source ~/.ssh_bash_completion
 fi
 
-# kubernetes (k8s) autocompletion
+# Kubernetes (k8s) autocompletion.
 if which kubectl > /dev/null 2>&1; then
     source <(kubectl completion bash)
 fi
+# Linux
 if [ -e /usr/share/bash-completion/bash_completion ]; then
     source /usr/share/bash-completion/bash_completion
+fi
+# Mac
+if [ -e /usr/local/share/bash-completion/bash_completion ]; then
+    source /usr/local/share/bash-completion/bash_completion
 fi
 
 ################
