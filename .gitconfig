@@ -26,3 +26,5 @@
         default = matching
 [url "git@github.com:jreisinger/"]
         insteadOf = jreisinger:
+[pull]
+	rebase = false
