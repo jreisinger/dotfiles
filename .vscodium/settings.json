@@ -8,5 +8,9 @@
     "python.pythonPath": "/usr/local/bin/python3",
     "go.useLanguageServer": true,
     "git.confirmSync": false,
-    "editor.rulers": [ 80, 120 ]
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "shellcheck.executablePath": "/usr/local/bin/shellcheck"
 }
