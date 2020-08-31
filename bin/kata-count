@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+# Count katas I've done.
+use 5.014;      # implies "use strict;"
+use warnings;
+use autodie;
+
+use HTTP::Tiny;
+
+my $url = 'https://reisinge.net/notes/prog/kata';
+my $response = HTTP::Tiny->new->get($url);
+die "Failed getting $url!\n" unless $response->{success};
+
+my %counts;
+my $done; # (-:
+my $date = qr'\d{4}-\d{2}-\d{2}';
+
+foreach (split(/\n/, $response->{content})) {
+    if (/$date:\s*([^<]+)</) {
+        my $katas = $1;
+        for my $kata (split(/\s*,\s*/, $katas)) {
+            $counts{$kata}++;
+            $done++ unless $kata eq ")-:"
+        }
+    }
+}
+
+
+
+for my $kata (sort {$counts{$a} <=> $counts{$b}} keys %counts) {
+    printf("%-15s %2d\n", $kata, $counts{$kata});
+}
+printf("%-15s %2d\n", "(-:", $done);
