@@ -34,7 +34,7 @@ foreach (split(/\n/, $response->{content})) {
 
 my $format = "%-15s %2d %s\n";
 
-for my $kata (sort {$counts{$a} <=> $counts{$b}} keys %counts) {
+for my $kata (sort keys %counts) {
     printf($format, $kata, $counts{$kata}, '|' x $counts{$kata});
 }
 
