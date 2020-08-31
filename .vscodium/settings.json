@@ -12,5 +12,6 @@
         80,
         120
     ],
-    "shellcheck.executablePath": "/usr/local/bin/shellcheck"
+    "shellcheck.executablePath": "/usr/local/bin/shellcheck",
+    "editor.minimap.enabled": false
 }
