@@ -1,0 +1,50 @@
+#!/usr/bin/env perl
+# List PerlMonk Saints that have been recently active.
+use 5.014;      # implies "use strict;"
+use warnings;
+use autodie;
+
+use HTTP::Tiny;
+
+my $url = 'https://perlmonks.org/?node=Saints%20in%20our%20Book';
+my $response = HTTP::Tiny->new->get($url);
+die "Failed getting $url!\n" unless $response->{success};
+
+my %seconds;
+my %minutes;
+my %hours;
+
+foreach (split(/\n/, $response->{content})) {
+    #<tr><td align="right">256</td><td><span class="user-394193"><a href="?node_id=394193">gube</a></span></td><td align="right">7624</td><td>Parson (16)</td><td align="right"><a href="?usersearch=gube;node_id=6364">227</a></td><td align="right">2004-09-27 15:08</td><td align="right">8 years ago</td></tr>
+    if ( /
+            usersearch=(?<user>[^;]+);
+            .*
+            >(?<count>\d+)\s+(?<unit>\w+)\s+ago<
+         /x
+       ) 
+    {
+        my ($user, $count, $unit) = ($+{user}, $+{count}, $+{unit});
+
+        if ($unit =~ /^seconds?$/) {
+            $seconds{$user} = $count;
+        } elsif ($unit =~ /^minutes?$/) {
+            $minutes{$user} = $count;
+        } elsif ($unit =~ /^hours?$/) {
+            $hours{$user} = $count;
+        }
+    }
+}
+
+my $format = "%-20s %02d %s ago\n";
+
+for my $user (sort {$hours{$b} <=> $hours{$a}} keys %hours) {
+    printf $format, $user, $hours{$user}, "hours";
+}
+
+for my $user (sort {$minutes{$b} <=> $minutes{$a}} keys %minutes) {
+    printf $format, $user, $minutes{$user}, "minutes";
+}
+
+for my $user (sort {$seconds{$b} <=> $seconds{$a}} keys %seconds) {
+    printf $format, $user, $seconds{$user}, "seconds";
+}
