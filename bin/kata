@@ -35,9 +35,19 @@ foreach (split(/\n/, $response->{content})) {
 my $format = "%-15s %2d %s\n";
 
 for my $kata (sort keys %counts) {
-    printf($format, $kata, $counts{$kata}, '|' x $counts{$kata});
+    printf($format, $kata, $counts{$kata}, graph($counts{$kata}));
 }
 
 print("-" x 79, "\n");
-printf($format, ")-:", $skipped, '|' x $skipped);
-printf($format, "(-:", $done, '|' x $done);
+printf($format, ")-:", $skipped, graph($skipped));
+printf($format, "(-:", $done, graph($done));
+
+sub graph {
+    my $n = shift;
+
+    my $hundreds = $n / 100;
+    my $tens = $n / 10;
+    my $ones = $n % 10;
+
+    return "I" x $hundreds . "i" x $tens . '.' x $ones;
+}
