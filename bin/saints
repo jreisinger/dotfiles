@@ -8,21 +8,19 @@ use HTTP::Tiny;
 
 my $url = 'https://perlmonks.org/?node=Saints%20in%20our%20Book';
 my $response = HTTP::Tiny->new->get($url);
-die "Failed getting $url!\n" unless $response->{success};
+die "Failed getting $url\n" unless $response->{success};
 
 my %seconds;
 my %minutes;
 my %hours;
 
+# <a href="?node_id=979">vroom</a> ...
+my $userRE = qr'<a href="\?node_id=\d+">(?<user>[^<]+)<\/a>';
+# ... <td align="right">2 years ago</td>
+my $timeRE = qr'<td align="right">(?<count>\d+) (?<unit>\w+) ago<\/td>';
+
 foreach (split(/\n/, $response->{content})) {
-    #<tr><td align="right">256</td><td><span class="user-394193"><a href="?node_id=394193">gube</a></span></td><td align="right">7624</td><td>Parson (16)</td><td align="right"><a href="?usersearch=gube;node_id=6364">227</a></td><td align="right">2004-09-27 15:08</td><td align="right">8 years ago</td></tr>
-    if ( /
-            usersearch=(?<user>[^;]+);
-            .*
-            >(?<count>\d+)\s+(?<unit>\w+)\s+ago<
-         /x
-       ) 
-    {
+    if ( /$userRE.*$timeRE/ ) {
         my ($user, $count, $unit) = ($+{user}, $+{count}, $+{unit});
 
         if ($unit =~ /^seconds?$/) {
