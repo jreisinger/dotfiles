@@ -13,5 +13,6 @@
         120
     ],
     "shellcheck.executablePath": "/usr/local/bin/shellcheck",
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "explorer.confirmDragAndDrop": false
 }
