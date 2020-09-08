@@ -4,7 +4,7 @@
     "workbench.startupEditor": "newUntitledFile",
     "go.formatTool": "goimports",
     "git.autofetch": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": -1,
     "python.pythonPath": "/usr/local/bin/python3",
     "go.useLanguageServer": true,
     "git.confirmSync": false,
