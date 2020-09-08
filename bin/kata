@@ -12,8 +12,8 @@ die "Failed getting $url!\n" unless $response->{success};
 
 my %counts;
 
-my $done;       # (-:
-my $skipped;    # )-:
+my $badDay; # )-:
+my $goodDay;
 
 my $dateRE = qr'\d{4}-\d{2}-\d{2}';
 my $kataRE = qr'([^<]+)<';
@@ -21,13 +21,14 @@ my $kataRE = qr'([^<]+)<';
 foreach (split(/\n/, $response->{content})) {
     if (/$dateRE:\s*$kataRE/) {
         my $katas = $1;
+        if ($katas eq ")-:") {
+            $badDay++;
+            next;
+        } else {
+            $goodDay++;
+        }
         for my $kata (split(/\s*,\s*/, $katas)) {
-            if ($kata eq ")-:") {
-                $skipped++;
-                next;
-            }
             $counts{$kata}++;
-            $done++;
         }
     }
 }
@@ -39,8 +40,8 @@ for my $kata (sort keys %counts) {
 }
 
 print("-" x 79, "\n");
-printf($format, ")-:", $skipped, graph($skipped));
-printf($format, "(-:", $done, graph($done));
+printf($format, ")-:", $badDay, graph($badDay));
+printf($format, "(-:", $goodDay, graph($goodDay));
 
 sub graph {
     my $n = shift;
