@@ -145,7 +145,7 @@ fi
 # K8s context in PS1. My alternative to https://github.com/jonmosco/kube-ps1.
 function __k8s_context {
     local ctx=""
-    if [[ -f $HOME/.kube/config ]]; then
+    if [[ -n $KUBECONFIG ]] || [[  -f $HOME/.kube/config ]]; then
         ctx=$(kubectl config view --minify --output json 2> /dev/null | jq -r '.["current-context"]')
     fi
     echo "[$ctx]"
@@ -238,6 +238,17 @@ function work () {
     cd $proj
     git-sync
 }
+
+# Multiple kubernetes clusters configuration.
+unset KUBECONFIG
+for f in $(find $HOME/.kube -type f \( -iname '*.yaml' -o -name '*.yml' \)); do
+    if [[ -z "$KUBECONFIG" ]]; then
+        KUBECONFIG=$f
+    else
+        KUBECONFIG=$KUBECONFIG:$f
+    fi
+done
+export KUBECONFIG
 
 ###########
 # MacBook #
