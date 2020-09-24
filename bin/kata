@@ -34,14 +34,17 @@ foreach (split(/\n/, $response->{content})) {
 }
 
 my $format = "%-15s %2d %s\n";
+my $total = 0;
 
-for my $kata (sort keys %counts) {
+for my $kata (sort { $counts{$a} <=> $counts{$b} } keys %counts) {
+    $total += $counts{$kata};
     printf($format, $kata, $counts{$kata}, graph($counts{$kata}));
 }
 
 print("-" x 79, "\n");
-printf($format, ")-:", $badDay, graph($badDay));
-printf($format, "(-:", $goodDay, graph($goodDay));
+printf($format, "total katas", $total, graph($total));
+printf($format, ")-: days", $badDay, graph($badDay));
+printf($format, "(-: days", $goodDay, graph($goodDay));
 
 sub graph {
     my $n = shift;
