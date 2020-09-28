@@ -36,7 +36,7 @@ foreach (split(/\n/, $response->{content})) {
 my $format = "%-15s %2d %s\n";
 my $total = 0;
 
-for my $kata (sort { $counts{$a} <=> $counts{$b} } keys %counts) {
+for my $kata (sort keys %counts) {
     $total += $counts{$kata};
     printf($format, $kata, $counts{$kata}, graph($counts{$kata}));
 }
