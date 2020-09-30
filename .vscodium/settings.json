@@ -4,7 +4,7 @@
     "workbench.startupEditor": "newUntitledFile",
     "go.formatTool": "goimports",
     "git.autofetch": true,
-    "window.zoomLevel": -1,
+    "window.zoomLevel": 0,
     "python.pythonPath": "/usr/local/bin/python3",
     "go.useLanguageServer": true,
     "git.confirmSync": false,
@@ -14,5 +14,6 @@
     ],
     "shellcheck.executablePath": "/usr/local/bin/shellcheck",
     "editor.minimap.enabled": false,
-    "explorer.confirmDragAndDrop": false
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false
 }
