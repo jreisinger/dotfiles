@@ -235,10 +235,13 @@ runonce myquote -s
 # Open my workshop
 function work () {
     local proj=$(find -L \
-        ~/git/hub ~/git/lab \
+        ~/git/hub ~/git/lab ~/data ~/temp \
         -maxdepth 1 -type d | peco)
     cd $proj
-    git-sync
+    # Run git-sync if it's a git repo.
+    if git status > /dev/null 2>&1; then
+        git-sync
+    fi
 }
 
 # Multiple kubernetes clusters configuration.
