@@ -76,6 +76,11 @@ if [ -e /usr/bin/vim ]; then
     alias vi='vim'
 fi
 
+# If VScode is not installed create alias to VSCodium
+if ! which code > /dev/null 2>&1; then
+    alias code=codium
+fi
+
 ########
 # PATH #
 ########
