@@ -1,26 +1,27 @@
 #!/bin/bash
 set -e # exit on error
 
-REPO_PREFIX=github.com/jreisinger
-
 # Help.
-if [[ $# -ne 2 ]]; then # of CLI arguments
+if [[ $# -ne 0 ]]; then
     cat << EOF
-go-code creates typical Go code directories and files. Based on
-https://golang.org/doc/code.html. Usage: go-code <module> <package>
+go-code creates typical Go code directories and files.
+It is based on https://golang.org/doc/code.html.
 EOF
-    exit 1
+    exit 0
 fi
 
-MOD="$1"
-PKG="$2"
+REPO_PREFIX=github.com/jreisinger
+
+MOD="space"
+PKG="planet"
 
 ## Repository/module
 
 REPO="$MOD"
-echo "--> Create repository/module '$REPO' (repository typically contains only one module)"
+echo "--> Create repository (folder) '$REPO'"
 mkdir $REPO
 cd $REPO
+echo "--> Create module '$REPO' (repository typically contains only one module)"
 go mod init $REPO_PREFIX/$MOD
 
 ## Package
@@ -32,15 +33,21 @@ cat << EOF > $PKG/srcfile.go
 package $PKG
 
 import (
-	"fmt"
+	"math"
 )
 
-func Func(name string) string {
-	return fmt.Sprintf("Hello from Func of $PKG, %s", name)
+type Planet struct {
+	Mass   float64
+	Radius float64
+}
+
+func (p Planet) Density() float64 {
+	volume := math.Pi * 4 / 3 * math.Pow(p.Radius, 3)
+	return p.Mass / volume
 }
 EOF
 
-echo "--> Create another source file - test file - of package '$PKG'"
+echo "--> Create another source file (test file) of package '$PKG'"
 cat << EOF > $PKG/srcfile_test.go
 package $PKG
 
@@ -48,17 +55,18 @@ import (
 	"testing"
 )
 
-func TestFunc(t *testing.T) {
-	cases := []struct {
-		in, want string
-	}{
-		{"Dude", "Hello from Func of $PKG, Dude"},
-		{"", "Hello from Func of $PKG, "},
+func TestDensity(t *testing.T) {
+	type testpair struct {
+		Planet  Planet
+		Density float64
 	}
-	for _, c := range cases {
-		got := Func(c.in)
-		if got != c.want {
-			t.Errorf("Func(%q) == %q, want %q", c.in, got, c.want)
+	testpairs := []testpair{
+		{Planet{1, 1}, 0.23873241463784298},
+	}
+	for _, tp := range testpairs {
+		d := tp.Planet.Density()
+		if d != tp.Density {
+			t.Errorf("got %v but expected %v\n", d, tp.Density)
 		}
 	}
 }
@@ -76,8 +84,11 @@ import (
 )
 
 func main() {
-   out := $PKG.Func("Dude")
-   fmt.Println(out)
+	jupiter := $PKG.Planet{
+		1.898e27,
+		6.9911e7,
+	}
+	fmt.Printf("The density of Jupiter is %.2f kg/m3.\n", jupiter.Density())
 }
 EOF
 
