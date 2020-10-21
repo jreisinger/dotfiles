@@ -3,17 +3,17 @@ set -e # exit on error
 
 REPO_PREFIX=github.com/jreisinger
 
-MOD="$1"
-PKG="pkg"
-
 # Help.
-if [ -z $MOD ]; then
+if [[ $# -ne 2 ]]; then # of CLI arguments
     cat << EOF
-gomod creates typical Go code directories and files. Based on
-https://golang.org/doc/code.html. Usage: gomod <module>
+go-code creates typical Go code directories and files. Based on
+https://golang.org/doc/code.html. Usage: go-code <module> <package>
 EOF
     exit 1
 fi
+
+MOD="$1"
+PKG="$2"
 
 ## Repository/module
 
@@ -28,7 +28,7 @@ go mod init $REPO_PREFIX/$MOD
 mkdir $PKG
 
 echo "--> Create source file of package '$PKG'"
-cat << EOF > $PKG/src-file1.go
+cat << EOF > $PKG/srcfile.go
 package $PKG
 
 import (
@@ -40,8 +40,8 @@ func Func(name string) string {
 }
 EOF
 
-echo "--> Create another source file of package '$PKG'"
-cat << EOF > $PKG/src-file2.go
+echo "--> Create another source file - test file - of package '$PKG'"
+cat << EOF > $PKG/srcfile_test.go
 package $PKG
 
 import (
