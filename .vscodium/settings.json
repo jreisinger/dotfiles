@@ -15,5 +15,10 @@
     "shellcheck.executablePath": "/usr/local/bin/shellcheck",
     "editor.minimap.enabled": false,
     "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "vs-kubernetes": {
+        "vs-kubernetes.minikube-path.mac": "/Users/reisinge/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
+        "vs-kubernetes.helm-path.mac": "/Users/reisinge/.vs-kubernetes/tools/helm/darwin-amd64/helm",
+        "vs-kubernetes.draft-path.mac": "/Users/reisinge/.vs-kubernetes/tools/draft/darwin-amd64/draft"
+    }
 }
