@@ -1,0 +1,81 @@
+#!/usr/bin/env perl
+#
+# My git shortcuts.
+#
+use strict;
+use warnings;
+use Term::ANSIColor;
+
+# Subcommand.
+my $cmd = shift;
+
+# Sanity checks.
+usage_and_exit() if not $cmd;
+check_we_are_in_git_repo();
+
+# Run subcommands.
+if      ($cmd eq "sync")    { sync()    } 
+elsif   ($cmd eq "minor")   { minor()   } 
+elsif   ($cmd eq "save")    { save()    } 
+else    { print "Uknown command: $cmd\n"; exit 1 }
+
+sub usage_and_exit {
+    print << "EOF";
+$0 sync|minor|save
+    sync    sync current branch with master
+    minor   add and commit modified files with a message
+    save    like minor + push
+EOF
+    exit 1;
+}
+
+sub run_cmd {
+    my $cmd = shift;
+    print color('bold green'), ">> ", color('reset'), $cmd, "\n";
+    system($cmd);
+}
+
+sub check_we_are_in_git_repo {
+    if (system("git status > /dev/null 2>&1")) {
+        print color('bold red'), ">> ", color('reset'), "You are not in a git repo\n";
+        exit 1;
+    }
+}
+
+sub sync {
+    my $current_branch = `git branch | grep '\*' | cut -d ' ' -f2`;
+    chomp($current_branch);
+    if ($current_branch eq "master") {
+        run_cmd 'git pull';
+        run_cmd 'git push';
+    } else {
+        #run_cmd 'git pull';
+        run_cmd 'git checkout master';
+        run_cmd 'git pull';
+        run_cmd "git checkout $current_branch";
+        run_cmd 'git merge master';
+        run_cmd 'git push';
+    }
+}
+
+sub minor {
+    my @files;
+
+    for (`git status --porcelain`) {
+        my $status   = (split)[0];
+        my $filename = (split)[1];
+        next if $status ne 'M';    # only modified files (man git-status)
+        push @files, $filename;
+    }
+
+    if (@files) {
+        my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
+        print color('bold green'), ">> ", color('reset'), "$cmd", "\n";
+        system($cmd);
+    }
+}
+
+sub save {
+    minor();
+    run_cmd 'git push';
+}
