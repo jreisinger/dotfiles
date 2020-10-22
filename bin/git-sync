@@ -3,36 +3,57 @@
 # Synchronize current Git branch with the master branch.
 #
 
+### GLOBAL VARIABLES ###
+
 # Colors for terminal.
-bldred='\033[31m'
-bldgrn='\033[1;32m'
-bldblu='\033[1;34m'
-txtrst='\033[0m'
+BLDRED='\033[31m'
+BLDGRN='\033[1;32m'
+#BLDBLU='\033[1;34m'
+TXTRST='\033[0m'
 
-# Check we are in a git repository.
-if ! git status > /dev/null 2>&1; then
-    echo -e "${bldred}>>${txtrst} Not a git repository, exiting ..."
-    exit 1
-fi
+CURRENT_BRANCH=$(git branch | grep '\*' | cut -d ' ' -f2)
 
-CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+### FUNCTIONS ###
+
+check_we_are_in_git_repo() {
+    if ! git status > /dev/null 2>&1; then
+        echo -e "${BLDRED}>>${TXTRST} Not a git repository, exiting ..."
+        exit 1
+    fi
+}
 
 run_cmd() {
-    cmd=$1
-    echo -e "${bldgrn}>>${txtrst} $cmd"
+    local cmd=$1
+    echo -e "${BLDGRN}>>${TXTRST} $cmd"
     $cmd
 }
 
-run_cmd 'git branch'
+git_sync() {
+    run_cmd 'git branch'
 
-if [[ $CURRENT_BRANCH == "master" ]]; then
-    run_cmd 'git pull'
-    run_cmd 'git push'
-else
-    #run_cmd 'git pull'
-    run_cmd 'git checkout master'
-    run_cmd 'git pull'
-    run_cmd "git checkout $CURRENT_BRANCH"
-    run_cmd 'git merge master'
-    run_cmd 'git push'
-fi
+    if [[ $CURRENT_BRANCH == "master" ]]; then
+        run_cmd 'git pull'
+        run_cmd 'git push'
+    else
+        #run_cmd 'git pull'
+        run_cmd 'git checkout master'
+        run_cmd 'git pull'
+        run_cmd "git checkout $CURRENT_BRANCH"
+        run_cmd 'git merge master'
+        run_cmd 'git push'
+    fi
+}
+
+### MAIN ###
+
+case "$1" in
+sync)
+    git_sync
+    ;;
+minor)
+    ;;
+*)
+    echo "Unknown subcommand: '$1'"
+    exit 1
+    ;;
+esac
