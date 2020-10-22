@@ -1,26 +1,2 @@
-#!/usr/bin/env perl
-#
-# Script that adds and commits modifications in git tracked files with a nice
-# message. It gets called from an alias within ~/.gitconfig.
-#
-use strict;
-use warnings;
-use Term::ANSIColor;
-
-my @files;
-
-for (`git status --porcelain`) {
-    my $status   = (split)[0];
-    my $filename = (split)[1];
-    next if $status ne 'M';    # only modified files (man git-status)
-    push @files, $filename;
-}
-
-if (@files) {
-    my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
-    print color('bold green');
-    print ">> ";
-    print color('reset');
-    print "$cmd\n";
-    exec $cmd;
-}
+#!/bin/bash
+git2 minor
