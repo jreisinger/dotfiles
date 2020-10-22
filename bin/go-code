@@ -21,14 +21,15 @@ REPO="$MOD"
 echo "--> Create repository (folder) '$REPO'"
 mkdir $REPO
 cd $REPO
-echo "--> Create module '$REPO' (repository typically contains only one module)"
+echo "--> Create module '$REPO_PREFIX/$MOD' (repository typically contains only one module)"
 go mod init $REPO_PREFIX/$MOD
 
 ## Package
 
+echo "--> Create package (folder) '$PKG'"
 mkdir $PKG
 
-echo "--> Create source file of package '$PKG'"
+echo "--> Create source file of package '$PKG': 'srcfile.go'"
 cat << EOF > $PKG/srcfile.go
 package $PKG
 
@@ -47,7 +48,7 @@ func (p Planet) Density() float64 {
 }
 EOF
 
-echo "--> Create another source file (test file) of package '$PKG'"
+echo "--> Create another source file of '$PKG': 'srcfile_test.go'"
 cat << EOF > $PKG/srcfile_test.go
 package $PKG
 
