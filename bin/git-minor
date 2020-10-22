@@ -7,15 +7,40 @@ use strict;
 use warnings;
 use Term::ANSIColor;
 
-my $subcmd = shift;
-if ($subcmd == "minor") {
-    minor_changes()
+my $cmd = shift;
+usage_and_exit() if not $cmd;
+if ($cmd eq "minor") {
+    minor()
+} elsif ($cmd eq "sync") {
+    sync()
 } else {
-    print "Uknown subcommand: $subcmd";
+    print "Uknown command: $cmd\n";
     exit 1;
 }
 
-sub minor_changes() {
+sub usage_and_exit {
+    print "Usage: $0 command\n";
+    exit 1;
+}
+
+sub sync {
+
+}
+
+sub check_we_are_in_git_repo {
+    if system("git status > /dev/null 2>&1") {
+        print color('bold red'), ">>" color('reset'), "Not in a git repo";
+    }
+}
+
+check_we_are_in_git_repo() {
+    if ! git status > /dev/null 2>&1; then
+        echo -e "${BLDRED}>>${TXTRST} Not a git repository, exiting ..."
+        exit 1
+    fi
+}
+
+sub minor {
     my @files;
 
     for (`git status --porcelain`) {
