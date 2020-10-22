@@ -7,30 +7,20 @@ use strict;
 use warnings;
 use Term::ANSIColor;
 
-my $subcmd = shift;
-if ($subcmd == "minor") {
-    minor_changes()
-} else {
-    print "Uknown subcommand: $subcmd";
-    exit 1;
+my @files;
+
+for (`git status --porcelain`) {
+    my $status   = (split)[0];
+    my $filename = (split)[1];
+    next if $status ne 'M';    # only modified files (man git-status)
+    push @files, $filename;
 }
 
-sub minor_changes() {
-    my @files;
-
-    for (`git status --porcelain`) {
-        my $status   = (split)[0];
-        my $filename = (split)[1];
-        next if $status ne 'M';    # only modified files (man git-status)
-        push @files, $filename;
-    }
-
-    if (@files) {
-        my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
-        print color('bold green');
-        print ">> ";
-        print color('reset');
-        print "$cmd\n";
-        exec $cmd;
-    }
+if (@files) {
+    my $cmd = "git commit -am 'minor changes in " . join( ", ", @files ) . "'";
+    print color('bold green');
+    print ">> ";
+    print color('reset');
+    print "$cmd\n";
+    exec $cmd;
 }
