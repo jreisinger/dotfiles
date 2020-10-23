@@ -49,7 +49,7 @@ sub sync {
         run_cmd 'git pull';
         run_cmd 'git push';
     } else {
-        #run_cmd 'git pull';
+        run_cmd 'git pull';
         run_cmd 'git checkout master';
         run_cmd 'git pull';
         run_cmd "git checkout $current_branch";
