@@ -8,10 +8,14 @@ if [[ -z $DIR ]]; then
 fi
 
 OIFS="$IFS"
+OKUBECONFIG="$KUBECONFIG"
+unset KUBECONFIG
 IFS=$'\n'
+
 for config in $(find $DIR -type f \( -name "*.conf.decrypted" -o -iname "*.conf" -o -iname "*.yaml" \)); do
     KUBECONFIG="$config:$KUBECONFIG"
 done
 IFS="$OIFS"
 
 KUBECONFIG=$KUBECONFIG kubectl config view --merge --flatten
+KUBECONFIG=$OKUBECONFIG
