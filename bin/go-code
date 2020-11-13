@@ -98,12 +98,7 @@ EOF
 echo "--> Create Makefile"
 cat << 'EOF' > Makefile
 test:
-	if [ ! -z "${SOME_VAR}" ]; then\
-		go clean -testcache ./...;\
-		go test ./... -tags manual;\
-	else\
-		go test ./...;\
-	fi
+	go test -race ./...;
 
 build: test
 	CGO_ENABLED=0 go build
@@ -112,6 +107,9 @@ cat << EOF >> Makefile
 
 run: build
 	./$MOD
+
+install: test
+	go install
 EOF
 
 ## Dockerfile
