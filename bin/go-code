@@ -38,8 +38,9 @@ import (
 )
 
 type Planet struct {
-	Mass   float64
-	Radius float64
+	Name	string
+	Mass   	float64
+	Radius 	float64
 }
 
 func (p Planet) Density() float64 {
@@ -62,7 +63,7 @@ func TestDensity(t *testing.T) {
 		Density float64
 	}
 	testpairs := []testpair{
-		{Planet{1, 1}, 0.23873241463784298},
+		{Planet{"Dummy", 1, 1}, 0.23873241463784298},
 	}
 	for _, tp := range testpairs {
 		d := tp.Planet.Density()
@@ -85,11 +86,12 @@ import (
 )
 
 func main() {
-	jupiter := $PKG.Planet{
-		1.898e27,
-		6.9911e7,
+	p := $PKG.Planet{
+		Name: 	"Jupiter",
+		Mass: 	1.898e27,
+		Radius:	6.9911e7,
 	}
-	fmt.Printf("The density of Jupiter is %.2f kg/m3.\n", jupiter.Density())
+	fmt.Printf("The density of %s is %.2f kg/m3.\n", p.Name, p.Density())
 }
 EOF
 
