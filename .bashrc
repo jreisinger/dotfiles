@@ -129,7 +129,7 @@ if [ -e ~/.ssh_bash_completion ]; then
     source ~/.ssh_bash_completion
 fi
 
-# Kubernetes (k8s) autocompletion.
+# K8s autocompletion.
 if which kubectl > /dev/null 2>&1; then
     source <(kubectl completion bash)
 fi
@@ -249,16 +249,15 @@ function work () {
     fi
 }
 
-# Multiple kubernetes clusters configuration.
+# No k8s cluster configuration selected by default.
 unset KUBECONFIG
-for f in $(find $HOME/.kube -type f \( -iname '*.yaml' -o -name '*.yml' \)); do
-    if [[ -z "$KUBECONFIG" ]]; then
-        KUBECONFIG=$f
-    else
-        KUBECONFIG=$KUBECONFIG:$f
-    fi
-done
-export KUBECONFIG
+
+# Allow me to select from multiple k8s clusters configurations.
+function k() {
+    local k8s_config=$(find $HOME/.kube -type f \( -iname '*.yaml' -o -name '*.yml' \) | peco)
+    KUBECONFIG=$k8s_config
+    export KUBECONFIG
+}
 
 ###########
 # MacBook #
