@@ -27,7 +27,7 @@ class Cache:
         cache_size = os.path.getsize(self.cache)
 
         now = time.time()
-        day_ago = now - 60*68*24*1 
+        day_ago = now - 60*60*24*1
 
         # cache older than a day or empty
         if cache_age < day_ago or cache_size == 0:
@@ -39,7 +39,10 @@ class Cache:
     def _download(self):
         """ Download quotes from the Web.
         """
-        r = requests.get(self.url)
+        try:
+            r = requests.get(self.url)
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
         quotes = ( r.text.split('\n\n') )
         f = open(self.cache, 'wb')
         pickle.dump(quotes, f)
