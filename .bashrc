@@ -15,7 +15,7 @@ export HISTFILESIZE=99999
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 
 # Search history with peco. Don't run cmmand from h just store it into history.
-function h() {
+function h {
     local tac
     if which tac > /dev/null; then
         tac="tac"
@@ -113,7 +113,7 @@ PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH})
 # Completions #
 ###############
 
-function _get_git_version() {
+function _get_git_version {
     local ver=$(git version | perl -ne '/([\d\.]+)/ && print $1')
     echo $ver
 }
@@ -238,14 +238,20 @@ runonce -i 20160 runp ~/git/hub/runp/commands/install-my-stuff.txt
 runonce myquote -s
 
 # Open my workshop
-function work () {
+function work {
     local proj=$(find -L \
         ~/git/hub ~/git/lab ~/data ~/temp \
         -maxdepth 1 -type d | peco)
     cd $proj
     # Run git-sync if it's a git repo.
     if git status > /dev/null 2>&1; then
+        echo "---[ Running git-sync ]---"
         git-sync
+    fi
+    # Run init script if present and executable.
+    if [[ -x ./work.sh ]]; then
+        echo "---[ Running ./work.sh ]---"
+        ./work.sh
     fi
 }
 
@@ -253,7 +259,7 @@ function work () {
 unset KUBECONFIG
 
 # Allow me to select from multiple k8s clusters configurations.
-function k() {
+function k {
     local k8s_config=$(find $HOME/.kube -type f \( -iname '*.yaml' -o -name '*.yml' \) | peco)
     KUBECONFIG=$k8s_config
     export KUBECONFIG
