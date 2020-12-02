@@ -227,12 +227,11 @@ fi
 if command -v perl5.18 > /dev/null 2>&1; then   # do we have perl5.18 binary?
     runonce -i 20160 perl5.18 ~/.../... supi    # fix for Mac
 else
-    runonce -i 20160 ... supi
+    runonce -i 20160 ~/.../... supi
 fi
 
 # Install my stuff but not always
-#runonce -i 20160 install_vim_stuff
-runonce -i 20160 runp ~/git/hub/runp/commands/install-my-stuff.txt
+runonce -i 20160 runp ~/.install-my-stuff.txt
 
 # Print quote but not always
 runonce myquote -s
