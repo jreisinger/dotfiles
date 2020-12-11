@@ -260,8 +260,7 @@ unset KUBECONFIG
 # Allow me to select from multiple k8s clusters configurations.
 function k {
     local k8s_config=$(find $HOME/.kube -type f \( -iname '*.yaml' -o -name '*.yml' \) | peco)
-    KUBECONFIG=$k8s_config
-    export KUBECONFIG
+    export KUBECONFIG=$k8s_config
 }
 
 ###########
