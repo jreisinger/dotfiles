@@ -43,6 +43,7 @@ sub check_we_are_in_git_repo {
 }
 
 sub sync {
+    run_cmd 'git branch';
     my $current_branch = `git branch | grep '\*' | cut -d ' ' -f2`;
     chomp($current_branch);
     if ($current_branch eq "master") {
