@@ -33,7 +33,7 @@ set shiftwidth=4    " number of spaces for indentation
 " (https://github.com/zdr1976/dotfiles/blob/master/vim/vimrc#L170)
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd BufNewFile,BufRead go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 "autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
 autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType json setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
