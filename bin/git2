@@ -46,7 +46,7 @@ sub sync {
     run_cmd 'git branch';
     my $current_branch = `git branch | grep '\*' | cut -d ' ' -f2`;
     chomp($current_branch);
-    if ($current_branch eq "master") {
+    if ($current_branch eq "master" or $current_branch eq "main") {
         run_cmd 'git pull';
         run_cmd 'git push';
     } else {
