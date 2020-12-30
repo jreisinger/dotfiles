@@ -1,4 +1,7 @@
+### bash ###
 curl -L -o $HOME/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+
+### vim ###
 #curl -L -o $HOME/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 rm -rf $HOME/.vim/pack/plugins/start/nerdtree && git clone https://github.com/scrooloose/nerdtree.git $HOME/.vim/pack/plugins/start/nerdtree
 rm -rf $HOME/.vim/pack/plugins/start/vim-nerdtree-tabs && git clone https://github.com/jistr/vim-nerdtree-tabs.git $HOME/.vim/pack/plugins/start/vim-nerdtree-tabs
@@ -9,3 +12,4 @@ rm -rf $HOME/.vim/pack/plugins/start/vim-go && git clone https://github.com/fati
 rm -rf $HOME/.vim/pack/plugins/start/grep.vim && git clone https://github.com/yegappan/grep.git $HOME/.vim/pack/plugins/start/grep.vim
 # https://tpaschalis.github.io/vim-go-setup/
 rm -rf $HOME/.vim/pack/plugins/start/vim-airline && git clone https://github.com/vim-airline/vim-airline $HOME/.vim/pack/plugins/start/vim-airline
+rm -rf $HOME/.vim/pack/plugins/start/vim-shellcheck && git clone https://github.com/itspriddle/vim-shellcheck $HOME/.vim/pack/plugins/start/vim-shellcheck
