@@ -33,7 +33,7 @@ set shiftwidth=4    " number of spaces for indentation
 " (https://github.com/zdr1976/dotfiles/blob/master/vim/vimrc#L170)
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-autocmd BufNewFile,BufRead go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+autocmd FileType go,godoc setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 "autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
 autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType json setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
@@ -87,26 +87,6 @@ nmap <silent> <RIGHT>         :cnext<CR>
 nmap <silent> <RIGHT><RIGHT>  :cnfile<CR><C-G>
 nmap <silent> <LEFT>          :cprev<CR>
 nmap <silent> <LEFT><LEFT>    :cpfile<CR><C-G>
-
-"====[ Toggle visibility of naughty characters ]===============================
-
-" Make naughty characters visible...
-" (uBB is right double angle, uB7 is middle dot)
-set lcs=tab:»·,trail:␣,nbsp:˷
-"highlight InvisibleSpaces ctermfg=Black ctermbg=Black
-"call matchadd('InvisibleSpaces', '\S\@<=\s\+\%#\ze\s*$', -10)
-
-augroup VisibleNaughtiness
-    autocmd!
-    autocmd BufEnter  *         set list
-    autocmd BufEnter  *.txt     set nolist
-    autocmd BufEnter  *.vp*     set nolist
-    autocmd BufEnter  *.go      set nolist
-    autocmd BufEnter  Makefile  set nolist
-    autocmd BufEnter  *         if !&modifiable
-    autocmd BufEnter  *             set nolist
-    autocmd BufEnter  *         endif
-augroup END
 
 "====[ Python stuff ]==========================================================
 
