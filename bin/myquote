@@ -20,7 +20,7 @@ class Cache:
         except IOError:
             file = open(self.cache, 'w')
     def get_lines(self):
-        """ Return list of quotes from a local file. If that is too old 
+        """ Return list of quotes from a local file. If that is too old
             download them from the Web.
         """
         cache_age = os.path.getmtime(self.cache)
