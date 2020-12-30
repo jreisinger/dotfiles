@@ -98,13 +98,14 @@ set lcs=tab:»·,trail:␣,nbsp:˷
 
 augroup VisibleNaughtiness
     autocmd!
-    autocmd BufEnter  *       set list
-    autocmd BufEnter  *.txt   set nolist
-    autocmd BufEnter  *.vp*   set nolist
-    autocmd BufEnter  *.go    set nolist
-    autocmd BufEnter  *       if !&modifiable
-    autocmd BufEnter  *           set nolist
-    autocmd BufEnter  *       endif
+    autocmd BufEnter  *         set list
+    autocmd BufEnter  *.txt     set nolist
+    autocmd BufEnter  *.vp*     set nolist
+    autocmd BufEnter  *.go      set nolist
+    autocmd BufEnter  Makefile  set nolist
+    autocmd BufEnter  *         if !&modifiable
+    autocmd BufEnter  *             set nolist
+    autocmd BufEnter  *         endif
 augroup END
 
 "====[ Python stuff ]==========================================================
