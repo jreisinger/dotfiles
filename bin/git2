@@ -6,17 +6,16 @@ use strict;
 use warnings;
 use Term::ANSIColor;
 
-# Subcommand.
-my $cmd = shift;
+my $cmd = shift; # subcommand
 
 # Sanity checks.
 usage_and_exit() if not $cmd;
 check_we_are_in_git_repo();
 
 # Run subcommands.
-if      ($cmd eq "sync")    { sync()    } 
-elsif   ($cmd eq "minor")   { minor()   } 
-elsif   ($cmd eq "save")    { save()    } 
+if      ($cmd eq "sync")    { sync()    }
+elsif   ($cmd eq "minor")   { minor()   }
+elsif   ($cmd eq "save")    { save()    }
 else    { print "Uknown command: $cmd\n"; exit 1 }
 
 sub usage_and_exit {
@@ -44,17 +43,25 @@ sub check_we_are_in_git_repo {
 
 sub sync {
     run_cmd 'git branch';
+
+    # Handle GitHub's idea to use main instead of master.
+    my $master = 'master';
+    if (system("git branch | grep master > /dev/null")) {
+        $master = 'main';
+    }
+
     my $current_branch = `git branch | grep '\*' | cut -d ' ' -f2`;
     chomp($current_branch);
-    if ($current_branch eq "master" or $current_branch eq "main") {
+
+    if ($current_branch eq $master) {
         run_cmd 'git pull';
         run_cmd 'git push';
     } else {
         run_cmd 'git pull';
-        run_cmd 'git checkout master';
+        run_cmd "git checkout $master";
         run_cmd 'git pull';
         run_cmd "git checkout $current_branch";
-        run_cmd 'git merge master';
+        run_cmd "git merge $master";
         run_cmd 'git push';
     }
 }
