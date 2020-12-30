@@ -109,6 +109,11 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# add brew python3 binary path to PATH (Mac)
+if [[ -d "/usr/local/opt/python@3/libexec/bin" ]]; then
+    PATH="/usr/local/opt/python@3/libexec/bin:$PATH"
+fi
+
 # dedup PATH
 PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
 
