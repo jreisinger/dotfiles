@@ -95,7 +95,7 @@ nmap <silent> <LEFT><LEFT>    :cpfile<CR><C-G>
 set ofu=syntaxcomplete#Complete
 
 "====[ Golang stuff ]==========================================================
-imap errh if err != nil {<CR>fmt.Fprintf(os.Stderr, "%v\n", err)<CR>os.Exit(1)<CR>}
+"imap errh if err != nil {<CR>fmt.Fprintf(os.Stderr, "%v\n", err)<CR>os.Exit(1)<CR>}
 let g:go_fmt_command = "goimports" " run goimports on save
 
 "====[ Perl stuff ]============================================================
