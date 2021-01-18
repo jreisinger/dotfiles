@@ -14,24 +14,6 @@ export HISTFILESIZE=99999
 # don't store duplicate lines or lines starting with space in the history
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 
-# Search history with peco. Don't run cmmand from h just store it into history.
-function h {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-
-    # awk removes duplicate lines (even not adjacent) and keeps the original order
-    local cmd=$(history | $tac | cut -c 8- | awk '!seen[$0]++' | peco)
-
-    history -s "$cmd" # add $cmd to history
-
-    #echo $cmd
-    #$cmd
-}
-
 ########
 # Perl #
 ########
@@ -219,6 +201,57 @@ function __prompt_command {
 # https://stackoverflow.com/questions/16715103/bash-prompt-with-last-exit-code
 PROMPT_COMMAND=__prompt_command
 
+######################
+# Productivity tools #
+######################
+
+# Open my workshop
+function work {
+    local proj=$(find -L \
+        ~/git/hub ~/git/lab ~/data ~/temp \
+        -maxdepth 1 -type d | peco)
+    cd $proj
+    # Run git-sync if it's a git repo.
+    if git status > /dev/null 2>&1; then
+        echo "---[ Running git-sync ]---"
+        git-sync
+    fi
+    # Run init script if present and executable.
+    if [[ -x ./work.sh ]]; then
+        echo "---[ Running ./work.sh ]---"
+        ./work.sh
+    fi
+}
+
+# Search history with peco. Don't run cmmand from h just store it into history.
+function h {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+
+    # awk removes duplicate lines (even not adjacent) and keeps the original order
+    local cmd=$(history | $tac | cut -c 8- | awk '!seen[$0]++' | peco)
+
+    history -s "$cmd" # add $cmd to history
+
+    #echo $cmd
+    #$cmd
+}
+
+# Open first file found around working directory in vi.
+function v {
+    local filename=$1
+    for d in . ../* ../../*; do
+        for f in $(find $d -type f -iname "*${filename}*"); do
+            vi "$f"
+            return 0
+        done
+    done
+}
+
 #########
 # Varia #
 #########
@@ -242,24 +275,6 @@ runonce -i 20160 runp ~/.install-my-stuff.txt
 
 # Print quote but not always
 runonce myquote -s
-
-# Open my workshop
-function work {
-    local proj=$(find -L \
-        ~/git/hub ~/git/lab ~/data ~/temp \
-        -maxdepth 1 -type d | peco)
-    cd $proj
-    # Run git-sync if it's a git repo.
-    if git status > /dev/null 2>&1; then
-        echo "---[ Running git-sync ]---"
-        git-sync
-    fi
-    # Run init script if present and executable.
-    if [[ -x ./work.sh ]]; then
-        echo "---[ Running ./work.sh ]---"
-        ./work.sh
-    fi
-}
 
 # No k8s cluster configuration selected by default.
 unset KUBECONFIG
