@@ -29,10 +29,13 @@ done
 shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
+
 REPO_PREFIX=github.com/jreisinger
 MOD="$*"; [[ $MOD == "" ]] && MOD="mod"
 PKG="pkg"
 REPO="$MOD"
+
+echo "--> Create Go code skeleton in '$MOD' folder"
 
 mkdir $REPO
 cd $REPO
