@@ -1,103 +1,51 @@
 #!/bin/bash
 set -e # exit on error
 
-# Help.
-if [[ $# -ne 0 ]]; then
+help_and_exit() {
     cat << EOF
-go-code creates typical Go code directories and files.
-It is based on https://golang.org/doc/code.html.
+${0##*/} [options]
+
+go-code creates typical Go code directories and files. It is based on
+https://golang.org/doc/code.html.
+
+  options:
+    -h, -?      help
+    -s          create script, i.e. a simple program
 EOF
-    exit 0
-fi
+
+    exit "$1"
+}
+
+while getopts "h?s" opt; do
+    case "$opt" in
+    h|\?)
+        help_and_exit 0
+        ;;
+    s)  script=1
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+[ "$1" = "--" ] && shift
 
 REPO_PREFIX=github.com/jreisinger
-
-MOD="space"
-PKG="planet"
-
-## Repository/module
-
+MOD="$*"; [[ $MOD == "" ]] && MOD="mod"
+PKG="pkg"
 REPO="$MOD"
-echo "--> Create repository (folder) $REPO"
+
 mkdir $REPO
 cd $REPO
-echo "--> Create module $REPO_PREFIX/$MOD (repository == module)"
 go mod init $REPO_PREFIX/$MOD
 
-## Package
+touch main.go
 
-echo "--> Create package (folder) $PKG"
+[[ $script ]] && exit 0
+
 mkdir $PKG
+touch "$PKG/$PKG.go"
+touch "$PKG/${PKG}_test.go"
 
-echo "--> Create source file of package $PKG: density.go"
-cat << EOF > $PKG/density.go
-package $PKG
-
-import (
-	"math"
-)
-
-type Planet struct {
-	Name	string
-	Mass   	float64
-	Radius 	float64
-}
-
-func (p Planet) Density() float64 {
-	volume := math.Pi * 4 / 3 * math.Pow(p.Radius, 3)
-	return p.Mass / volume
-}
-EOF
-
-echo "--> Create another source file of $PKG: density_test.go"
-cat << EOF > $PKG/density_test.go
-package $PKG
-
-import (
-	"testing"
-)
-
-func TestDensity(t *testing.T) {
-	type testpair struct {
-		Planet  Planet
-		Density float64
-	}
-	testpairs := []testpair{
-		{Planet{"Dummy", 1, 1}, 0.23873241463784298},
-	}
-	for _, tp := range testpairs {
-		d := tp.Planet.Density()
-		if d != tp.Density {
-			t.Errorf("got %v but expected %v\n", d, tp.Density)
-		}
-	}
-}
-EOF
-
-## Main
-
-cat << EOF > main.go
-package main
-
-import (
-	"fmt"
-
-    "$REPO_PREFIX/$MOD/$PKG"
-)
-
-func main() {
-	p := $PKG.Planet{
-		Name: 	"Jupiter",
-		Mass: 	1.898e27,
-		Radius:	6.9911e7,
-	}
-	fmt.Printf("The density of %s is %.2f kg/m3.\n", p.Name, p.Density())
-}
-EOF
-
-## Makefile
-
-echo "--> Create Makefile"
 cat << 'EOF' > Makefile
 test:
 	go test -race ./...;
@@ -114,9 +62,6 @@ install: test
 	go install
 EOF
 
-## Dockerfile
-
-echo "--> Create Dockerfile"
 cat << EOF > Dockerfile
 FROM golang AS build
 
@@ -138,18 +83,10 @@ COPY --from=build /app/$MOD /bin/$MOD
 ENTRYPOINT ["/bin/$MOD"]
 EOF
 
-## README
-
-echo "--> Create README"
 cat << EOF > README
-Module space contains package planet.
-EOF
+Module mod contains package pkg.
 
-## Next steps
-
-echo "--> Let's disco"
-cat << EOF
-cd $MOD
-make run
-docker build . -t $MOD
+	make run
+	make install
+	docker build . -t $MOD
 EOF
