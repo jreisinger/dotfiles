@@ -41,13 +41,21 @@ mkdir $REPO
 cd $REPO
 go mod init $REPO_PREFIX/$MOD
 
-touch main.go
+cat << EOF > main.go
+package main
+
+func main() {}
+EOF
 
 [[ $script ]] && exit 0
 
 mkdir $PKG
-touch "$PKG/$PKG.go"
-touch "$PKG/${PKG}_test.go"
+cat << EOF > "$PKG/$PKG.go"
+package $PKG
+EOF
+cat << EOF > "$PKG/${PKG}_test.go"
+package $PKG
+EOF
 
 cat << 'EOF' > Makefile
 test:
