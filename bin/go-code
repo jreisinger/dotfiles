@@ -31,8 +31,8 @@ shift $((OPTIND-1))
 
 
 REPO_PREFIX=github.com/jreisinger
-MOD="$*"; [[ $MOD == "" ]] && MOD="mod"
-PKG="pkg"
+MOD="$*"; [[ $MOD == "" ]] && MOD="mymod"
+PKG="mypkg"
 REPO="$MOD"
 
 echo "--> Create Go code skeleton in '$MOD' folder"
@@ -87,7 +87,7 @@ ENTRYPOINT ["/bin/$MOD"]
 EOF
 
 cat << EOF > README
-Module mod contains package pkg.
+Module $MOD contains package $PKG.
 
 	make run
 	make install
