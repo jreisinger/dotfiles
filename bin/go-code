@@ -3,7 +3,7 @@ set -e # exit on error
 
 help_and_exit() {
     cat << EOF
-${0##*/} [options]
+${0##*/} [options] [modname]
 
 go-code creates typical Go code directories and files. It is based on
 https://golang.org/doc/code.html.
