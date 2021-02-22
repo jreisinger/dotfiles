@@ -90,9 +90,14 @@ if [[ -d "$HOME/.local/bin" ]]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# add brew python3 binary path to PATH (Mac)
+# add brew python3 binary to PATH (Mac)
 if [[ -d "/usr/local/opt/python@3/libexec/bin" ]]; then
     PATH="/usr/local/opt/python@3/libexec/bin:$PATH"
+fi
+
+# add user python3 library to PATH (Mac)
+if [[ -d "$HOME/Library/Python/3.8/bin" ]]; then
+    PATH="$HOME/Library/Python/3.8/bin:$PATH"
 fi
 
 # dedup PATH
