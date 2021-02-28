@@ -9,7 +9,7 @@ our ($h, $b, $x, $c, $l);
 # Help message...
 if ($h) {
     print <<'EOF';
-Simple calculator based on Perl's eval()
+Simple CLI calculator based on Perl's eval()
 
 calc [options] <expression>
 
@@ -19,11 +19,10 @@ calc [options] <expression>
 -c  convert expression (or its result) to character
 -l  calculate base 2 logarithm of expression
 
-calc '300 000 000 / (24 * 3600)'
-calc '300,000,000 / (24 * 3600)'
-calc 2**5 + 2x5    # x is the same as * (multiplication)
-calc V10           # V is the same as sqrt (square root)
-calc -b 2^8        # ^ is the same as ** (exponentiation)
+calc '149,600,000/299 792 458*1000' # comma or space are thousands separator
+calc 2x2 + 2*2                      # x is the same as * (multiplication)
+calc 'sqrt(V(3+3+3) * 3)'           # V is the same as sqrt (square root)
+calc -b 2^8                         # ^ is the same as ** (exponentiation)
 calc -x 256
 calc -c 2**17-3030
 calc -l 256
