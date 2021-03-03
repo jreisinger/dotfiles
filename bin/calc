@@ -26,7 +26,6 @@ calc -b 2^8                             # ^ is the same as ** (exponentiation)
 calc -x $RANDOM
 calc -c 2**17-3030
 calc -l 256
-for i in $(seq 0 255); do calc -c $i; done > /tmp/ascii-table.txt
 EOF
     exit 0;
 }
@@ -49,17 +48,21 @@ die "Does not compute...$expr\n" unless defined $res;
 
 if ($b) {       # Show result in binary...
     printf "%s = %b\n", $expr, $res;
+    exit
 } elsif ($x) {  # Show result in hex...
     printf "%s = %x\n", $expr, $res;
+    exit
 } elsif ($c) {  # Show result as character...
     binmode(STDOUT, ':utf8');
     printf "%s = %c\n", $expr, $res;
-} elsif ($l) {  # Calculate base 2 logarithm...
-    $res = log($res)/log(2.0);
-    printf "log %s = %f\n", $expr, $res;
-} else { # Show thousands in result but not in the decimal part...
-    my ( $before_dot, $after_dot ) = split /\./, $res;
-    $before_dot =~ s/(\d{1,3}?)(?=(\d{3})+$)/$1 /g;
-
-    printf "%s = %s.%s\n", $expr, $before_dot, $after_dot // 0;
+    exit
 }
+
+if ($l) {   # Calculate base 2 logarithm...
+    $res = log($res)/log(2.0);
+}
+
+# Show thousands in result but not in the decimal part...
+my ( $before_dot, $after_dot ) = split /\./, $res;
+$before_dot =~ s/(\d{1,3}?)(?=(\d{3})+$)/$1 /g;
+printf "%s = %s.%s\n", $expr, $before_dot, $after_dot // 0;
