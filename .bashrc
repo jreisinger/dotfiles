@@ -58,12 +58,9 @@ if [ -e /usr/bin/vim ]; then
     alias vi='vim'
 fi
 
-# Use settings.json from non-default location
-alias code="code --user-data-dir $HOME/data/vscodium"
-
 # If VScode is not installed use VSCodium
 if ! which code > /dev/null 2>&1; then
-    alias code="codium --user-data-dir $HOME/data/vscodium"
+    alias code="codium"
 fi
 
 ########
