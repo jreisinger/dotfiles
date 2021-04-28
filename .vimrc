@@ -46,7 +46,7 @@ autocmd FileType c,go,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 set cinkeys-=0#
 set indentkeys-=0#
 
-set textwidth=79
+set textwidth=80
 set colorcolumn=80
 
 set nu          " show line numbers
