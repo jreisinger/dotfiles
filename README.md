@@ -10,3 +10,7 @@ To use it install dot files manager [...](https://github.com/ingydotnet/...)
     .../... install
 
 ... or just copy the dot files and the `bin` directory.
+
+Others' dotfiles:
+
+* https://github.com/davecheney/dotfiles
